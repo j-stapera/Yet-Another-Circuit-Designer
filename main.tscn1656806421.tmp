@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5guqm1eybxig"]
+
+[ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor-electronic-component-electronic-circuit-electric-current-passivity-electronic-5a95ec210b83baea0d01d8c23cc62f5b.png" id="2_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://dlp8dpyy38cpp" path="res://electronic-symbol-electrolytic-capacitor-wiring-diagram-symbol-abf8f023a6faf3548478b1740c782a92.png" id="3_lquwl"]
+[ext_resource type="Texture2D" uid="uid://j4626myjd2u7" path="res://inductor-electronic-symbol-electromagnetic-coil-inductance-symbol-0fe827b1d882c74af6b49f9af1b3d862.png" id="4_7mycd"]
+[ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage-source-electronic-symbol-electric-potential-difference-direct-current-current-source-symbol-0ed462b32966ec9df9e6ecb86d54d8ac.png" id="5_lquwl"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_0xm2m")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button Resistor" type="Button" parent="Container"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 1.0
+offset_right = 2013.0
+offset_bottom = 759.0
+scale = Vector2(0.04, 0.04)
+icon = ExtResource("2_1bvp3")
+
+[node name="Button Capacitor" type="Button" parent="Container"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 35.0
+offset_right = 2013.0
+offset_bottom = 990.0
+scale = Vector2(0.04, 0.035)
+icon = ExtResource("3_lquwl")
+
+[node name="Button Inductor" type="Button" parent="Container"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 77.0
+offset_right = 2013.0
+offset_bottom = 752.0
+scale = Vector2(0.04, 0.04)
+icon = ExtResource("4_7mycd")
+
+[node name="Button Voltage Source" type="Button" parent="Container"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 111.0
+offset_right = 2013.0
+offset_bottom = 1066.0
+scale = Vector2(0.04, 0.035)
+icon = ExtResource("5_lquwl")
+
+[node name="ResistorHolo" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.282353)
+position = Vector2(-125, -58)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_1bvp3")
+
+[connection signal="pressed" from="Container/Button Resistor" to="." method="_on_button_resistor_pressed"]

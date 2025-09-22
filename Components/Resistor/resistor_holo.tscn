@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt5djhjg65dco"]
+
+[ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_0xxf3"]
+
+[node name="ResistorHolo" type="Sprite2D"]
+self_modulate = Color(1, 1, 1, 0.282353)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_0xxf3")
