@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgo60v1n2o68c"]
+
+[ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="1_floj5"]
+
+[node name="VsHolo" type="Sprite2D"]
+self_modulate = Color(1, 1, 1, 0.28235295)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_floj5")

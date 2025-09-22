@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgnonagq5fy3b"]
+
+[ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="1_wigc2"]
+
+[node name="VoltageSource" type="Node2D"]
+scale = Vector2(0.05, 0.05)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wigc2")
