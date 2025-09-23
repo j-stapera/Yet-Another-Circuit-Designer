@@ -1,0 +1,8 @@
+res://Components/Resistor/resistor.tscn
+res://main.tscn
+res://graph.gd
+res://main.gd
+res://Components/Resistor/resistor.gd
+res://readme.txt
+res://Components/Voltage Source/voltage_source.tscn
+res://Components/Voltage Source/voltage_source.gd

@@ -62,7 +62,7 @@ func handle_element():
 		var instance = element_selected.instantiate()
 		instance.position = holo_node.position
 		instance.rotation = holo_node.rotation
-		add_child(instance)
+		$Graph.add_child(instance)
 
 ## Cancels the currently selected component. Will only trigger when an element is also selected, so RMB functionality is still available
 func cancel_selection():
@@ -70,6 +70,7 @@ func cancel_selection():
 		holo_node.queue_free()
 	holo_node = null
 	element_selected = null
+
 
 func handle_wire():
 	pass

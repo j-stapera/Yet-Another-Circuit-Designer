@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfpiupp15il6d"]
+[gd_scene load_steps=5 format=3 uid="uid://bfpiupp15il6d"]
 
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_anlt7"]
 [ext_resource type="Script" uid="uid://uwjdn8ciimkh" path="res://Components/Resistor/resistor.gd" id="1_j3p18"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mlmyw"]
-radius = 27.984993
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlmyw"]
+size = Vector2(34.02233, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_msrb1"]
+size = Vector2(20, 23.114752)
 
 [node name="Resistor" type="Node2D"]
 scale = Vector2(0.1, 0.1)
@@ -25,11 +28,14 @@ scale = Vector2(37.6383, 6.63834)
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="Start" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-729.99976, 9.999998)
-scale = Vector2(4.6999993, 4.6999993)
-shape = SubResource("CircleShape2D_mlmyw")
+position = Vector2(-554.49994, 0)
+scale = Vector2(17.90001, 22.300014)
+shape = SubResource("RectangleShape2D_mlmyw")
 
 [node name="End" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(749.99994, 9.999999)
-scale = Vector2(4.7, 4.7)
-shape = SubResource("CircleShape2D_mlmyw")
+position = Vector2(600, 0)
+scale = Vector2(27.099966, 18.300001)
+shape = SubResource("RectangleShape2D_msrb1")
+
+[connection signal="mouse_entered" from="Container" to="." method="_on_container_mouse_entered"]
+[connection signal="mouse_exited" from="Container" to="." method="_on_container_mouse_exited"]

@@ -13,3 +13,11 @@ General Godot Tips
 		* Parents have accessibility to their child's functions and 
 		* Every node can use the func _process()
 		* Each node may have its own script
+
+Project Specific:
+	Inputs:
+		* Clicking a button will create a transparent version of the relative component that follows the cursor
+		* Clicking after selecting a component will place it at the cursor's position
+		* While holding a component, Q and E rotate the component left and right, respectively
+		* After a component has been placed, it can be dragged by hovering over it and using Shift+LMB
+		* Components can be rotated after being placed or while being dragged

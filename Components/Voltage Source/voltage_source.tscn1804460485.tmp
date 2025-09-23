@@ -9,15 +9,3 @@ script = ExtResource("1_14h41")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_wigc2")
-
-[node name="Container" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -700.0
-offset_top = -1000.0001
-offset_right = -660.0
-offset_bottom = -960.0001
-scale = Vector2(35.720512, 48.878834)
-
-[connection signal="mouse_entered" from="Container" to="." method="_on_container_mouse_entered"]
-[connection signal="mouse_exited" from="Container" to="." method="_on_container_mouse_exited"]

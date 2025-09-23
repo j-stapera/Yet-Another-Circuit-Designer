@@ -12,10 +12,11 @@ func _process(_delta):
 func handle_movement():
 	if hover and Input.is_action_pressed("Drag"):
 		position = get_global_mouse_position()
-	if hover and Input.is_action_just_pressed("Rotate Left"):
+	if Input.is_action_just_pressed("Rotate Left"):
 		rotation_degrees -= 45
-	if hover and Input.is_action_just_pressed("Rotate Right"):
+	if Input.is_action_just_pressed("Rotate Right"):
 		rotation_degrees += 45
+
 
 func _on_container_mouse_exited():
 	if not Input.is_action_pressed("Drag"):
