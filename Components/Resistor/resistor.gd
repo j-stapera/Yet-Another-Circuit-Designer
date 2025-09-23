@@ -8,7 +8,8 @@ func _on_container_mouse_entered():
 
 func _process(_delta):
 	handle_movement()
-	
+
+
 func handle_movement():
 	if hover and Input.is_action_pressed("Drag"):
 		position = get_global_mouse_position()

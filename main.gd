@@ -40,7 +40,6 @@ func select_element(scene: PackedScene, holo: PackedScene):
 	holo_node.position = get_global_mouse_position()
 
 
-
 func _process(_delta):
 	#
 	if element_selected and placeable:
