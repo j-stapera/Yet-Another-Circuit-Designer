@@ -1,24 +1,25 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1758596922
-main.gd::GDScript::2951926136148381396::1758596896::0::1::::<>Node2D<><>0<>0<><>::
-main.tscn::PackedScene::6892136526268336378::1758596896::0::1::::<><><>0<>0<><>::uid://bib61604nsbtk::::res://main.gd<>uid://dj3f6n68t587x::::res://Components/Resistor/resistor.png<>uid://dlp8dpyy38cpp::::res://Components/Capacitor/capacitor.png<>uid://j4626myjd2u7::::res://Components/Inductor/inductor.png<>uid://bans8qfumlg7f::::res://Components/Voltage Source/voltage source.png
+::res://::1759200545
+graph.gd::GDScript::3924345271502025466::1759194552::0::1::::<>Node2D<><>0<>0<><>::
+main.gd::GDScript::2951926136148381396::1759200482::0::1::::<>Node2D<><>0<>0<><>::
+main.tscn::PackedScene::6892136526268336378::1759200482::0::1::::<><><>0<>0<><>::uid://bib61604nsbtk::::res://main.gd<>uid://dj3f6n68t587x::::res://Components/Resistor/resistor.png<>uid://dlp8dpyy38cpp::::res://Components/Capacitor/capacitor.png<>uid://j4626myjd2u7::::res://Components/Inductor/inductor.png<>uid://bans8qfumlg7f::::res://Components/Voltage Source/voltage source.png<>uid://bv58nmu8w88os::::res://graph.gd
 README.md::TextFile::-1::1758582186::0::1::::<><><>0<>0<><>::
-readme.txt::TextFile::-1::1758596896::0::1::::<><><>0<>0<><>::
+readme.txt::TextFile::-1::1758601846::0::1::::<><><>0<>0<><>::
 UI.tscn::PackedScene::2373272746855967514::1758596896::0::1::::<><><>0<>0<><>::uid://dlp8dpyy38cpp::::res://Components/Capacitor/capacitor.png<>uid://dj3f6n68t587x::::res://Components/Resistor/resistor.png<>uid://j4626myjd2u7::::res://Components/Inductor/inductor.png
-::res://Components/::1758581990
-wire.tscn::PackedScene::790844956785365133::1758577286::0::1::::<><><>0<>0<><>::
+::res://Components/::1759200545
+wire.tscn::PackedScene::893022622103394117::1759200556::0::1::::<><><>0<>0<><>::
 ::res://Components/Capacitor/::1758581990
 capacitor.png::CompressedTexture2D::7964314841606289629::1757999914::1758581856::1::::<><><>0<>0<>1adc495190a13b71ee372dfd928a9639<>res://.godot/imported/capacitor.png-b68b02b5e04ce883b19e301922b81190.ctex::
 ::res://Components/Inductor/::1758581990
 inductor.png::CompressedTexture2D::693498638685352028::1757999914::1758581862::1::::<><><>0<>0<>0b65decd411d5be767a4a2cb03c49880<>res://.godot/imported/inductor.png-0f7ca3ed40be357ee06a785b0d3a7e9c.ctex::
-::res://Components/Resistor/::1758596896
-resistor.gd::GDScript::1449745727550563403::1758596896::0::1::::<>Node2D<><>0<>0<><>::
+::res://Components/Resistor/::1758601846
+resistor.gd::GDScript::1449745727550563403::1758601788::0::1::::<>Node2D<><>0<>0<><>::
 resistor.png::CompressedTexture2D::7849123897728618971::1757999914::1758581868::1::::<><><>0<>0<>84af3e7cbfe44687372ec5087f3bb0ca<>res://.godot/imported/resistor.png-43160f594035643a7b1adcb391081b31.ctex::
-resistor.tscn::PackedScene::2768852832258446957::1758596896::0::1::::<><><>0<>0<><>::uid://dj3f6n68t587x::::res://Components/Resistor/resistor.png<>uid://uwjdn8ciimkh::::res://Components/Resistor/resistor.gd
+resistor.tscn::PackedScene::2768852832258446957::1758601846::0::1::::<><><>0<>0<><>::uid://dj3f6n68t587x::::res://Components/Resistor/resistor.png<>uid://uwjdn8ciimkh::::res://Components/Resistor/resistor.gd
 resistor_holo.tscn::PackedScene::3782138650442865470::1758581868::0::1::::<><><>0<>0<><>::uid://dj3f6n68t587x::::res://Components/Resistor/resistor.png
-::res://Components/Voltage Source/::1758581990
+::res://Components/Voltage Source/::1759200545
 voltage source.png::CompressedTexture2D::2414410280587345333::1758427176::1758581872::1::::<><><>0<>0<>c08ce57c0b0fc560005b3fad4fce8179<>res://.godot/imported/voltage source.png-79cc7d8e7639936f72119d2594b055b1.ctex::
-voltage_source.tscn::PackedScene::5221684603272776225::1758581872::0::1::::<><><>0<>0<><>::uid://bans8qfumlg7f::::res://Components/Voltage Source/voltage source.png
+voltage_source.gd::GDScript::6469146008485147226::1759191346::0::1::::<>Node2D<><>0<>0<><>::
+voltage_source.tscn::PackedScene::5221684603272776225::1759191346::0::1::::<><><>0<>0<><>::uid://cyfx5incdykfy::::res://Components/Voltage Source/voltage_source.gd<>uid://bans8qfumlg7f::::res://Components/Voltage Source/voltage source.png
 vs_holo.tscn::PackedScene::2838383049484111648::1758581872::0::1::::<><><>0<>0<><>::uid://bans8qfumlg7f::::res://Components/Voltage Source/voltage source.png
-wire.gd::GDScript::6161123451296796318::1758577875::0::1::::<>Line2D<><>0<>0<><>::
-wire.tscn::PackedScene::893022622103394117::1758577875::0::1::::<><><>0<>0<><>::uid://ct1q2kmya3u03::::res://Components/Voltage Source/wire.gd
+wire.gd::GDScript::6161123451296796318::1759200498::0::1::::<>Line2D<><>0<>0<><>::

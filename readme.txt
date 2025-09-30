@@ -32,3 +32,4 @@ Project Specific:
 		* While holding a component, Q and E rotate the component left and right, respectively
 		* After a component has been placed, it can be dragged by hovering over it and using Shift+LMB
 		* Components can be rotated after being placed or while being dragged
+		* 
