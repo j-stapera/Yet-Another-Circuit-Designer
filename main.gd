@@ -13,6 +13,7 @@ var voltageSource_scn = preload("res://Components/Voltage Source/voltage_source.
 var voltageSource_holoscn = preload("res://Components/Voltage Source/vs_holo.tscn")
 var wire_scn = preload("res://Components/wire.tscn")
 var element_rotation
+@onready var connectiongraph = get_node("ConnectionGraph")
 
 ## Need to expand the container and create a function to limit placing components when the mouse enters the container ***
 var placeable = true
@@ -62,6 +63,8 @@ func handle_element():
 		var instance = element_selected.instantiate()
 		instance.position = holo_node.position
 		instance.rotation = holo_node.rotation
+		var nodeId = connectiongraph.addNode(instance) #Add this node to the connection graph
+		print(nodeId)
 		add_child(instance)
 
 ## Cancels the currently selected component. Will only trigger when an element is also selected, so RMB functionality is still available
