@@ -1,9 +1,45 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgnonagq5fy3b"]
+[gd_scene load_steps=4 format=3 uid="uid://cgnonagq5fy3b"]
 
+[ext_resource type="Script" uid="uid://cyfx5incdykfy" path="res://Components/Voltage Source/voltage_source.gd" id="1_14h41"]
 [ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="1_wigc2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_14h41"]
 
 [node name="VoltageSource" type="Node2D"]
 scale = Vector2(0.05, 0.05)
+script = ExtResource("1_14h41")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_wigc2")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -700.0
+offset_top = -1000.0001
+offset_right = -660.0
+offset_bottom = -960.0001
+scale = Vector2(35.720512, 48.878834)
+
+[node name="Start" type="Area2D" parent="."]
+
+[node name="StartPos" type="CollisionShape2D" parent="Start"]
+unique_name_in_owner = true
+position = Vector2(0, 860)
+scale = Vector2(31.400043, 31.400043)
+shape = SubResource("CircleShape2D_14h41")
+
+[node name="End" type="Area2D" parent="."]
+
+[node name="EndPos" type="CollisionShape2D" parent="End"]
+unique_name_in_owner = true
+position = Vector2(0, -900.00006)
+scale = Vector2(31.400042, 31.400042)
+shape = SubResource("CircleShape2D_14h41")
+
+[connection signal="mouse_entered" from="Container" to="." method="_on_container_mouse_entered"]
+[connection signal="mouse_exited" from="Container" to="." method="_on_container_mouse_exited"]
+[connection signal="area_entered" from="Start" to="." method="_on_start_area_entered"]
+[connection signal="input_event" from="Start" to="." method="_on_start_input_event"]
+[connection signal="mouse_entered" from="Start" to="." method="_on_start_mouse_entered"]
+[connection signal="input_event" from="End" to="." method="_on_end_input_event"]

@@ -3,7 +3,17 @@ extends Node2D
 ## Initialize for component selection and its holo counterpart
 var element_selected: PackedScene = null
 var holo_node: Node2D = null
+var wire: PackedScene = null
+
+
 var wire_mode = false
+var placing_wire = false
+var wire_instance
+var start_position = Vector2(0, 0)
+var end_position = Vector2(0, 0)
+var start
+var end
+#signal wire_placed(start: Vector2, end: Vector2)
 
 
 ## Load in all the scenes. Each component will be preloaded in this section
@@ -43,11 +53,13 @@ func select_element(scene: PackedScene, holo: PackedScene):
 
 
 func _process(_delta):
-	#
+
 	if element_selected and placeable:
 		holo_node.position = get_global_mouse_position()
 		handle_element()
+	
 
+	
 	if Input.is_action_just_pressed("Cancel") and element_selected:
 		cancel_selection()
 		
@@ -63,16 +75,40 @@ func handle_element():
 		var instance = element_selected.instantiate()
 		instance.position = holo_node.position
 		instance.rotation = holo_node.rotation
+		$Graph.add_child(instance)
+		instance.port_clicked.connect(_on_port_clicked)
 		var nodeId = connectiongraph.addNode(instance) #Add this node to the connection graph
 		print(nodeId)
 		add_child(instance)
 
 ## Cancels the currently selected component. Will only trigger when an element is also selected, so RMB functionality is still available
 func cancel_selection():
+	wire_mode = false
 	if holo_node and holo_node.is_inside_tree():
 		holo_node.queue_free()
 	holo_node = null
 	element_selected = null
 
-func handle_wire():
-	pass
+## Handles the wiring between components
+func _on_port_clicked(component_id, port_name, position):
+	if not placing_wire and wire_mode:
+		start = { "id": component_id, "port": port_name }
+		start_position = position
+		
+		wire_instance = wire_scn.instantiate()
+		add_child(wire_instance)
+		#connect("wire_placed", Callable(wire_instance, "draw_wire"))
+		placing_wire = true
+		print("starting point created at: ", start_position)
+	elif wire_mode:
+			# Second click: set end and finalize wire
+		end = { "id": component_id, "port": port_name }
+		end_position = position
+		print("starting position before sending: ", start_position)
+		#emit_signal("wire_placed", start_position, end_position)
+		wire_instance.draw_wire(start_position, end_position)
+			#wire_instance.draw_wire(start, end)  # pass coords into wire’s script
+		placing_wire = false
+		disconnect("wire_placed", Callable(wire_instance, "draw_wire"))
+		print("end point created at: ", end_position)
+	

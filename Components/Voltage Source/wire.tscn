@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://myt7mv47oond"]
-
-[ext_resource type="Script" uid="uid://ct1q2kmya3u03" path="res://Components/Voltage Source/wire.gd" id="1_y5a5w"]
-
-[node name="Wire" type="Line2D"]
-script = ExtResource("1_y5a5w")

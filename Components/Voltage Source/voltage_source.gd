@@ -33,6 +33,7 @@ func handle_movement():
 		rotation_degrees += 45
 
 
+
 func _on_start_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		emit_signal("port_clicked", id, "start", %StartPos.global_position)
@@ -42,5 +43,3 @@ func _on_end_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		emit_signal("port_clicked", id, "end", %EndPos.global_position)
 		print("Port end clicked on resistor ", id)
-var value = 2.0 #resistance in ohms
-var edges = []
