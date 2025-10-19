@@ -6,7 +6,6 @@ var holo_node: Node2D = null
 var wire: PackedScene = null
 
 
-var wire_mode = false
 var placing_wire = false
 var wire_instance
 var start_position = Vector2(0, 0)
@@ -36,7 +35,7 @@ func _on_button_voltage_source_pressed():
 	
 func _on_button_wire_pressed():
 	cancel_selection()
-	wire_mode = true
+	Global.wire_mode = true
 
 ## Assign the currently selected component based on the button pressed
 func select_element(scene: PackedScene, holo: PackedScene):
@@ -50,16 +49,18 @@ func select_element(scene: PackedScene, holo: PackedScene):
 	holo_node.position = get_global_mouse_position()
 
 
+func snap_to_grid(pos):
+	return Vector2(round(pos.x / Global.grid_size) * Global.grid_size, round(pos.y / Global.grid_size) * Global.grid_size)
 
 func _process(_delta):
 
 	if element_selected and placeable:
-		holo_node.position = get_global_mouse_position()
+		holo_node.position = snap_to_grid(get_global_mouse_position())
 		handle_element()
 	
 
 	
-	if Input.is_action_just_pressed("Cancel") and element_selected:
+	if Input.is_action_just_pressed("Cancel"):
 		cancel_selection()
 		
 
@@ -79,7 +80,8 @@ func handle_element():
 
 ## Cancels the currently selected component. Will only trigger when an element is also selected, so RMB functionality is still available
 func cancel_selection():
-	wire_mode = false
+	Global.wire_mode = false
+	placing_wire = false
 	if holo_node and holo_node.is_inside_tree():
 		holo_node.queue_free()
 	holo_node = null
@@ -87,7 +89,7 @@ func cancel_selection():
 
 ## Handles the wiring between components
 func _on_port_clicked(component_id, port_name, position):
-	if not placing_wire and wire_mode:
+	if not placing_wire and Global.wire_mode:
 		start = { "id": component_id, "port": port_name }
 		start_position = position
 		
@@ -96,15 +98,21 @@ func _on_port_clicked(component_id, port_name, position):
 		#connect("wire_placed", Callable(wire_instance, "draw_wire"))
 		placing_wire = true
 		print("starting point created at: ", start_position)
-	elif wire_mode:
+	elif Global.wire_mode:
 			# Second click: set end and finalize wire
 		end = { "id": component_id, "port": port_name }
 		end_position = position
 		print("starting position before sending: ", start_position)
-		#emit_signal("wire_placed", start_position, end_position)
 		wire_instance.draw_wire(start_position, end_position)
-			#wire_instance.draw_wire(start, end)  # pass coords into wire’s script
 		placing_wire = false
 		disconnect("wire_placed", Callable(wire_instance, "draw_wire"))
 		print("end point created at: ", end_position)
-	
+
+
+
+func _draw():
+	var viewport_size = get_viewport_rect().size
+	for x in range(0, int(viewport_size.x), Global.grid_size):
+		draw_line(Vector2(x, 0), Vector2(x, viewport_size.y), Global.grid_color)
+	for y in range(0, int(viewport_size.y), Global.grid_size):
+		draw_line(Vector2(0, y), Vector2(viewport_size.x, y), Global.grid_color)

@@ -5,6 +5,9 @@
 .godot/
 .nomedia
 
+# Necessary for global project settings changes
+!.godot/project.godot
+
 # Godot-specific ignores
 .import/
 export.cfg
