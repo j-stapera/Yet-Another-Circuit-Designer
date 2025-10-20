@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 .godot
-=======
 # Godot 4+ specific ignores
 .godot/
 .nomedia
@@ -21,4 +19,3 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
->>>>>>> 2ae0573 (Add gitignore, template changes for undirected graph to hold component values)

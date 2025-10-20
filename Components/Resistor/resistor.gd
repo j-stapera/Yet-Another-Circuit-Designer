@@ -72,3 +72,5 @@ func set_resistance(new_res):
 func _on_line_edit_text_submitted(new_text):
 	var res = new_text.to_int()
 	set_resistance(res)
+var value = 2.0 #resistance in ohms
+var edges = []
