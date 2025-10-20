@@ -15,6 +15,15 @@ run/main_scene="uid://c5guqm1eybxig"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://grid.gd"
+
+[gui]
+
+theme/default_font_antialiasing=2
+theme/default_font_generate_mipmaps=true
+
 [input]
 
 Place={
@@ -42,3 +51,8 @@ Drag={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(506, 6),"global_position":Vector2(515, 54),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=2
+environment/defaults/default_clear_color=Color(0.33288068, 0.3328807, 0.3328806, 1)
