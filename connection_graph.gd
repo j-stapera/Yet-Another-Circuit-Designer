@@ -17,4 +17,13 @@ func addNode(node) -> int:
 func regenerate_edges() -> void:
 	for nodekey in nodes.keys():
 		print("TODO")
+
+func addEdge(nodeA, nodeB) -> void:
+	nodeA.edges += [nodeA, nodeB]
+	nodeB.edges += [nodeB, nodeA]
 	
+func delNode(node) -> void:
+	for e in node.edges: #Remove all the neighbors' references to this node. NOTE: Need to establish whether or not this causes looping errors. I don't know.
+		if(e[1] == node):
+			node.edges.erase(e) #Hypothetically problematic if there are duplicate edges. Fix: Make sure there aren't duplicate edges
+	nodes.erase(node) #finally, remove the node itself. Again, make sure no duplicate nodes in the list
