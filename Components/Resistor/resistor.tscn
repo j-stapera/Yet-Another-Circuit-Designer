@@ -1,35 +1,83 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfpiupp15il6d"]
+[gd_scene load_steps=8 format=3 uid="uid://bfpiupp15il6d"]
 
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_anlt7"]
 [ext_resource type="Script" uid="uid://uwjdn8ciimkh" path="res://Components/Resistor/resistor.gd" id="1_j3p18"]
+[ext_resource type="Texture2D" uid="uid://wd0s0yii56ma" path="res://misc/bubble.png" id="3_iwnpr"]
+[ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="3_msrb1"]
+[ext_resource type="Script" uid="uid://cmnnlrc586hgi" path="res://Components/Resistor/text.gd" id="4_bke0b"]
+
+[sub_resource type="Theme" id="Theme_iwnpr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mlmyw"]
-radius = 27.984993
 
 [node name="Resistor" type="Node2D"]
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.08, 0.08)
 script = ExtResource("1_j3p18")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_anlt7")
 
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = -612.5
+offset_top = -600.0
+offset_right = 583.5
+offset_bottom = -227.0
+theme = SubResource("Theme_iwnpr")
+theme_override_fonts/font = ExtResource("3_msrb1")
+theme_override_font_sizes/font_size = 300
+placeholder_text = "0"
+alignment = 1
+flat = true
+select_all_on_focus = true
+script = ExtResource("4_bke0b")
+
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -750.0
-offset_top = -133.333
-offset_right = -710.0
-offset_bottom = -93.3333
-scale = Vector2(37.6383, 6.63834)
+offset_left = -550.00006
+offset_top = -125.0
+offset_right = -510.00006
+offset_bottom = -85.000305
+scale = Vector2(27.638287, 6.63834)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Start" type="Area2D" parent="."]
+position = Vector2(-4.7683716e-05, 0)
 
-[node name="Start" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-729.99976, 9.999998)
-scale = Vector2(4.6999993, 4.6999993)
+[node name="StartPos" type="CollisionShape2D" parent="Start"]
+unique_name_in_owner = true
+position = Vector2(-739.9999, 0)
+scale = Vector2(18.199997, 18.199997)
 shape = SubResource("CircleShape2D_mlmyw")
 
-[node name="End" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(749.99994, 9.999999)
-scale = Vector2(4.7, 4.7)
+[node name="Port" type="Sprite2D" parent="Start"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.39215687)
+position = Vector2(-737.5, 12.5)
+texture = ExtResource("3_iwnpr")
+
+[node name="End" type="Area2D" parent="."]
+position = Vector2(-4.7683716e-05, 0)
+
+[node name="EndPos" type="CollisionShape2D" parent="End"]
+unique_name_in_owner = true
+position = Vector2(740.0001, 0)
+scale = Vector2(18.199997, 18.199997)
 shape = SubResource("CircleShape2D_mlmyw")
+
+[node name="Port2" type="Sprite2D" parent="End"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.39215687)
+position = Vector2(737.5, 12.5)
+texture = ExtResource("3_iwnpr")
+
+[connection signal="editing_toggled" from="LineEdit" to="." method="_on_line_edit_editing_toggled"]
+[connection signal="editing_toggled" from="LineEdit" to="LineEdit" method="_on_editing_toggled"]
+[connection signal="text_submitted" from="LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="text_submitted" from="LineEdit" to="LineEdit" method="_on_text_submitted"]
+[connection signal="gui_input" from="Container" to="." method="_on_container_gui_input"]
+[connection signal="mouse_entered" from="Container" to="." method="_on_container_mouse_entered"]
+[connection signal="mouse_exited" from="Container" to="." method="_on_container_mouse_exited"]
+[connection signal="area_entered" from="Start" to="." method="_on_start_area_entered"]
+[connection signal="input_event" from="Start" to="." method="_on_start_input_event"]
+[connection signal="mouse_entered" from="Start" to="." method="_on_start_mouse_entered"]
+[connection signal="input_event" from="End" to="." method="_on_end_input_event"]

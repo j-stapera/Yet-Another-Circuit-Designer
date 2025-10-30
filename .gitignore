@@ -1,9 +1,10 @@
-<<<<<<< HEAD
 .godot
-=======
 # Godot 4+ specific ignores
 .godot/
 .nomedia
+
+# Necessary for global project settings changes
+!.godot/project.godot
 
 # Godot-specific ignores
 .import/
@@ -18,4 +19,3 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
->>>>>>> 2ae0573 (Add gitignore, template changes for undirected graph to hold component values)
