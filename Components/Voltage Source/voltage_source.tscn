@@ -25,11 +25,11 @@ texture = ExtResource("1_wigc2")
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -700.0
-offset_top = -1000.0001
-offset_right = -660.0
-offset_bottom = -960.0001
-scale = Vector2(35.720512, 48.878834)
+offset_left = -600.0
+offset_top = -560.0
+offset_right = -560.0
+offset_bottom = -520.0
+scale = Vector2(30.613209, 26.564402)
 
 [node name="Start" type="Area2D" parent="."]
 
@@ -55,6 +55,7 @@ scale = Vector2(31.400042, 31.400042)
 shape = SubResource("CircleShape2D_14h41")
 
 [node name="Port2" type="Sprite2D" parent="End"]
+visible = false
 self_modulate = Color(1, 1, 1, 0.39215687)
 position = Vector2(-0.0019165062, 880)
 scale = Vector2(1.8000343, 1.8000343)
