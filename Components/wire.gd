@@ -13,3 +13,9 @@ func draw_wire(start: Vector2, end: Vector2):
 	add_point(end)
 	
 	print("wire drawn from start ", start, " to ", pointB, " to ", pointC, " to ", end)
+
+
+#func draw_wire():
+	#if Global.wire_mode:
+		#pass
+		#
