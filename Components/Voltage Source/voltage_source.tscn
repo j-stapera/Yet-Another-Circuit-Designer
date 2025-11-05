@@ -1,9 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://cgnonagq5fy3b"]
+[gd_scene load_steps=9 format=3 uid="uid://cgnonagq5fy3b"]
 
 [ext_resource type="Script" uid="uid://cyfx5incdykfy" path="res://Components/Voltage Source/voltage_source.gd" id="1_14h41"]
 [ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="1_wigc2"]
+[ext_resource type="Texture2D" uid="uid://wd0s0yii56ma" path="res://misc/bubble.png" id="3_e6oro"]
+[ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="4_vfi0p"]
+[ext_resource type="Script" uid="uid://cmnnlrc586hgi" path="res://Components/Resistor/text.gd" id="5_ipvbx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_14h41"]
+
+[sub_resource type="Theme" id="Theme_e5a3p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vfi0p"]
+line_spacing = 8.0
+font = ExtResource("4_vfi0p")
+font_size = 550
 
 [node name="VoltageSource" type="Node2D"]
 scale = Vector2(0.05, 0.05)
@@ -15,11 +25,11 @@ texture = ExtResource("1_wigc2")
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -700.0
-offset_top = -1000.0001
-offset_right = -660.0
-offset_bottom = -960.0001
-scale = Vector2(35.720512, 48.878834)
+offset_left = -600.0
+offset_top = -560.0
+offset_right = -560.0
+offset_bottom = -520.0
+scale = Vector2(30.613209, 26.564402)
 
 [node name="Start" type="Area2D" parent="."]
 
@@ -29,6 +39,13 @@ position = Vector2(0, 860)
 scale = Vector2(31.400043, 31.400043)
 shape = SubResource("CircleShape2D_14h41")
 
+[node name="Port" type="Sprite2D" parent="Start"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.39215687)
+position = Vector2(-6.1035153e-05, -919.9998)
+scale = Vector2(-1.6967326, -1.6967326)
+texture = ExtResource("3_e6oro")
+
 [node name="End" type="Area2D" parent="."]
 
 [node name="EndPos" type="CollisionShape2D" parent="End"]
@@ -37,9 +54,43 @@ position = Vector2(0, -900.00006)
 scale = Vector2(31.400042, 31.400042)
 shape = SubResource("CircleShape2D_14h41")
 
+[node name="Port2" type="Sprite2D" parent="End"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.39215687)
+position = Vector2(-0.0019165062, 880)
+scale = Vector2(1.8000343, 1.8000343)
+texture = ExtResource("3_e6oro")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = -2280.0
+offset_top = -760.00006
+offset_right = -1084.0
+offset_bottom = -387.00006
+scale = Vector2(1.8676465, 1.8676465)
+theme = SubResource("Theme_e5a3p")
+theme_override_fonts/font = ExtResource("4_vfi0p")
+theme_override_font_sizes/font_size = 300
+placeholder_text = "0"
+alignment = 1
+flat = true
+select_all_on_focus = true
+script = ExtResource("5_ipvbx")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -1300.0
+offset_top = 160.0
+offset_right = -1299.0
+offset_bottom = 959.0
+scale = Vector2(1, 0.637)
+label_settings = SubResource("LabelSettings_vfi0p")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="mouse_entered" from="Container" to="." method="_on_container_mouse_entered"]
 [connection signal="mouse_exited" from="Container" to="." method="_on_container_mouse_exited"]
 [connection signal="area_entered" from="Start" to="." method="_on_start_area_entered"]
 [connection signal="input_event" from="Start" to="." method="_on_start_input_event"]
 [connection signal="mouse_entered" from="Start" to="." method="_on_start_mouse_entered"]
 [connection signal="input_event" from="End" to="." method="_on_end_input_event"]
+[connection signal="editing_toggled" from="LineEdit" to="LineEdit" method="_on_editing_toggled"]
+[connection signal="text_submitted" from="LineEdit" to="LineEdit" method="_on_text_submitted"]

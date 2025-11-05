@@ -6,14 +6,14 @@ var holo_node: Node2D = null
 var wire: PackedScene = null
 
 
-var placing_wire = false
+#var placing_wire = false
 var wire_instance
 var start_position = Vector2(0, 0)
 var end_position = Vector2(0, 0)
-var start
-var end
+var start = {}
+var end = {}
 #signal wire_placed(start: Vector2, end: Vector2)
-
+signal add_connection(start, end)
 
 ## Load in all the scenes. Each component will be preloaded in this section
 var resistor_scn = preload("res://Components/Resistor/resistor.tscn")
@@ -78,39 +78,40 @@ func handle_element():
 		instance.rotation = holo_node.rotation
 		$Graph.add_child(instance)
 		instance.port_clicked.connect(_on_port_clicked)
-		var nodeId = connectiongraph.addNode(instance) #Add this node to the connection graph
-		print(nodeId)
-		add_child(instance)
+
 
 ## Cancels the currently selected component. Will only trigger when an element is also selected, so RMB functionality is still available
 func cancel_selection():
 	Global.wire_mode = false
-	placing_wire = false
+	Global.placing_wire = false
 	if holo_node and holo_node.is_inside_tree():
 		holo_node.queue_free()
 	holo_node = null
 	element_selected = null
 
-## Handles the wiring between components
+## Handles the wiring between components. Still needs to be redone.
+
+
 func _on_port_clicked(component_id, port_name, position):
-	if not placing_wire and Global.wire_mode:
+	if not Global.placing_wire and Global.wire_mode:
 		start = { "id": component_id, "port": port_name }
 		start_position = position
-		
+
 		wire_instance = wire_scn.instantiate()
 		add_child(wire_instance)
-		#connect("wire_placed", Callable(wire_instance, "draw_wire"))
-		placing_wire = true
-		print("starting point created at: ", start_position)
+
+		Global.placing_wire = true
+
+	
 	elif Global.wire_mode:
 			# Second click: set end and finalize wire
 		end = { "id": component_id, "port": port_name }
 		end_position = position
-		print("starting position before sending: ", start_position)
+		
 		wire_instance.draw_wire(start_position, end_position)
-		placing_wire = false
-		disconnect("wire_placed", Callable(wire_instance, "draw_wire"))
-		print("end point created at: ", end_position)
+		Global.placing_wire = false
+		
+		$Graph.add_connection(start, end)
 
 
 
