@@ -117,3 +117,5 @@ func reorder_nodeName():
 		new_counter += 1
 	
 	print(nodes)
+	
+	

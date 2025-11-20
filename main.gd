@@ -13,13 +13,15 @@ var end_position = Vector2(0, 0)
 var start = {}
 var end = {}
 #signal wire_placed(start: Vector2, end: Vector2)
-signal add_connection(start, end)
+#signal add_connection(start, end)
 
 ## Load in all the scenes. Each component will be preloaded in this section
 var resistor_scn = preload("res://Components/Resistor/resistor.tscn")
 var resistor_holoscn = preload("res://Components/Resistor/resistor_holo.tscn")
 var voltageSource_scn = preload("res://Components/Voltage Source/voltage_source.tscn")
 var voltageSource_holoscn = preload("res://Components/Voltage Source/vs_holo.tscn")
+var currentSource_scn = preload("res://Components/Current Source/current_source.tscn")
+var currentSource_holoscn = preload("res://Components/Current Source/current_holo.tscn")
 var wire_scn = preload("res://Components/wire.tscn")
 var element_rotation
 @onready var connectiongraph = get_node("ConnectionGraph")
@@ -37,6 +39,10 @@ func _on_button_voltage_source_pressed():
 func _on_button_wire_pressed():
 	cancel_selection()
 	Global.wire_mode = true
+	
+func _on_button_current_source_pressed():
+	select_element(currentSource_scn, currentSource_holoscn)
+
 
 ## Assign the currently selected component based on the button pressed
 func select_element(scene: PackedScene, holo: PackedScene):
@@ -101,6 +107,7 @@ func _on_port_clicked(component_id, port_name, position):
 		add_child(wire_instance)
 
 		Global.placing_wire = true
+		print("placing wire")
 
 	
 	elif Global.wire_mode:

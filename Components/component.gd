@@ -59,11 +59,11 @@ func _on_container_mouse_exited():
 	if not Input.is_action_pressed("Drag"):
 		hover = false
 
-func _on_start_input_event(event):
+func _on_start_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		emit_signal("port_clicked", id, "start", %StartPos.global_position)
 
-func _on_end_input_event(event):
+func _on_end_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		emit_signal("port_clicked", id, "end", %EndPos.global_position)
 
