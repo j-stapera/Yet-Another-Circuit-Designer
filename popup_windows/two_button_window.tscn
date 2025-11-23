@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://biuxxv7urwmik"]
+
+[ext_resource type="Script" uid="uid://dayerc43x3i03" path="res://popup_windows/two_button.gd" id="1_c02of"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Window" type="Window" parent="."]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(335, 165)
+script = ExtResource("1_c02of")
+
+[node name="Label" type="Label" parent="Window"]
+offset_left = 10.0
+offset_top = 22.0
+offset_right = 325.0
+offset_bottom = 79.0
+text = "This is a label"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="Window"]
+offset_left = 88.0
+offset_top = 107.0
+offset_right = 119.0
+offset_bottom = 138.0
+text = "OK"
+
+[node name="Button2" type="Button" parent="Window"]
+offset_left = 208.0
+offset_top = 107.0
+offset_right = 258.0
+offset_bottom = 138.0
+text = "Why?"
+
+[connection signal="close_requested" from="Window" to="Window" method="_on_close_requested"]
+[connection signal="pressed" from="Window/Button" to="Window" method="_on_button_pressed"]

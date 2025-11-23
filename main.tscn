@@ -13,58 +13,65 @@
 [ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://loop_detection.gd" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://mesh_loop.gd" id="12_dg77c"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_272bh"]
+
 [node name="main" type="Node2D"]
 script = ExtResource("1_0xm2m")
 
-[node name="Container" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="FoldableContainer" type="FoldableContainer" parent="."]
+offset_left = 52.0
+offset_top = 23.0
+offset_right = 180.0
+offset_bottom = 415.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7mycd")
+title = "Tools"
 
-[node name="Button Resistor" type="Button" parent="Container"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 1.0
-offset_right = 2013.0
-offset_bottom = 759.0
-scale = Vector2(0.04, 0.04)
+[node name="MarginContainer" type="MarginContainer" parent="FoldableContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Button Resistor" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
 icon = ExtResource("2_1bvp3")
+icon_alignment = 1
+expand_icon = true
 
-[node name="Button Capacitor" type="Button" parent="Container"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 35.0
-offset_right = 2013.0
-offset_bottom = 990.0
-scale = Vector2(0.04, 0.035)
+[node name="Button Capacitor" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 icon = ExtResource("3_lquwl")
+icon_alignment = 1
+expand_icon = true
 
-[node name="Button Inductor" type="Button" parent="Container"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 77.0
-offset_right = 2013.0
-offset_bottom = 752.0
-scale = Vector2(0.04, 0.04)
-icon = ExtResource("4_7mycd")
-
-[node name="Button Voltage Source" type="Button" parent="Container"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 111.0
-offset_right = 2013.0
-offset_bottom = 1066.0
-scale = Vector2(0.04, 0.035)
+[node name="Button Voltage Source" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 icon = ExtResource("5_lquwl")
+icon_alignment = 1
+expand_icon = true
 
-[node name="Button Wire" type="Button" parent="Container"]
-layout_mode = 0
-offset_left = 5.9999995
-offset_top = 187.99998
-offset_right = 14.0
-offset_bottom = 195.99998
-scale = Vector2(9.919998, 3.6800003)
+[node name="Button Wire" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button Inductor" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+icon = ExtResource("4_7mycd")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Button" type="Button" parent="Container"]
 layout_mode = 0
@@ -84,55 +91,56 @@ icon = ExtResource("6_kek77")
 
 [node name="WireMode" type="Node2D" parent="."]
 
-[node name="Graph" type="Node" parent="."]
-script = ExtResource("6_272bh")
+[node name="Graph" type="Node2D" parent="."]
 
 [node name="ConnectionGraph" type="Node" parent="."]
 script = ExtResource("6_7mycd")
 
-[node name="Solver" type="Node" parent="."]
-script = ExtResource("8_5vw27")
+[node name="Panel" type="Panel" parent="."]
+offset_left = 951.0
+offset_top = 14.0
+offset_right = 1267.0
+offset_bottom = 76.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_272bh")
 
-[node name="Button" type="Button" parent="."]
-offset_left = 1085.0
-offset_top = 70.0
-offset_right = 1134.0
-offset_bottom = 101.0
-text = "Solve"
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -27.5
+offset_right = 156.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 27
+alignment = 1
 
-[node name="KVL" type="Node" parent="."]
-script = ExtResource("10_4c57u")
+[node name="Copy Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "Copy"
 
-[node name="Loop Detection" type="Node" parent="."]
-script = ExtResource("11_efxa6")
+[node name="Paste Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "Paste"
 
-[node name="Button2" type="Button" parent="."]
-offset_left = 1025.0
-offset_top = 112.0
-offset_right = 1134.0
-offset_bottom = 143.0
-text = "Detect Loops"
+[node name="Check Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "Check 
+Circuit"
 
-[node name="Button" type="Button" parent="Button2"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Simplify Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "Simplify 
+Circuit"
 
-[node name="Button3" type="Button" parent="."]
-offset_left = 1053.0
-offset_top = 157.0
-offset_right = 1135.0
-offset_bottom = 188.0
-text = "Solve KVL"
-
-[node name="Mesh Loop" type="Node" parent="."]
-script = ExtResource("12_dg77c")
-
-[connection signal="pressed" from="Container/Button Resistor" to="." method="_on_button_resistor_pressed"]
-[connection signal="pressed" from="Container/Button Voltage Source" to="." method="_on_button_voltage_source_pressed"]
-[connection signal="pressed" from="Container/Button Wire" to="." method="_on_button_wire_pressed"]
-[connection signal="pressed" from="Container/Button" to="Graph" method="_on_button_pressed"]
-[connection signal="pressed" from="Container/Button Current Source" to="." method="_on_button_current_source_pressed"]
+[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Resistor" to="." method="_on_button_resistor_pressed"]
+[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Voltage Source" to="." method="_on_button_voltage_source_pressed"]
+[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Wire" to="." method="_on_button_wire_pressed"]
+[connection signal="child_entered_tree" from="Graph" to="." method="_on_graph_child_entered_tree"]
 [connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
 [connection signal="pressed" from="Button" to="Solver" method="_on_button_pressed"]
 [connection signal="pressed" from="Button2" to="Loop Detection" method="_on_button_2_pressed"]
