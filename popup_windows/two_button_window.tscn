@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://biuxxv7urwmik"]
+
+[ext_resource type="Script" uid="uid://dayerc43x3i03" path="res://popup_windows/two_button.gd" id="1_c02of"]
+
+[node name="Window" type="Window"]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(335, 165)
+transient = true
+unresizable = true
+minimize_disabled = true
+maximize_disabled = true
+script = ExtResource("1_c02of")
+
+[node name="Dialog" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 22.0
+offset_right = 325.0
+offset_bottom = 79.0
+text = "This is a label"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="OK Button" type="Button" parent="."]
+offset_left = 88.0
+offset_top = 107.0
+offset_right = 119.0
+offset_bottom = 138.0
+text = "OK"
+
+[node name="Why Button" type="Button" parent="."]
+offset_left = 208.0
+offset_top = 107.0
+offset_right = 258.0
+offset_bottom = 138.0
+text = "Why?"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="OK Button" to="." method="_on_ok_button_pressed"]
+[connection signal="pressed" from="Why Button" to="." method="_on_why_button_pressed"]

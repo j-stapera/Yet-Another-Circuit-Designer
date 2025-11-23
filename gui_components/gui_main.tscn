@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5guqm1eybxig"]
+
+[ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main.gd" id="1_hru16"]
+[ext_resource type="PackedScene" uid="uid://cjto5eyl021c" path="res://gui_components/components_selector.tscn" id="2_txhx8"]
+[ext_resource type="PackedScene" uid="uid://uo4go1gio6sk" path="res://gui_components/copy-paste_panel.tscn" id="3_e8s8u"]
+[ext_resource type="Script" uid="uid://dqqaaseor1laa" path="res://connection_graph.gd" id="7_jjedt"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_hru16")
+
+[node name="FoldableContainer" parent="." instance=ExtResource("2_txhx8")]
+
+[node name="Panel" parent="." instance=ExtResource("3_e8s8u")]
+
+[node name="WireMode" type="Node2D" parent="."]
+
+[node name="Graph" type="Node2D" parent="."]
+
+[node name="ConnectionGraph" type="Node" parent="."]
+script = ExtResource("7_jjedt")
+
+[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Resistor" to="." method="_on_button_resistor_pressed"]
+[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Voltage Source" to="." method="_on_button_voltage_source_pressed"]
+[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Wire" to="." method="_on_button_wire_pressed"]
+[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Current Source" to="." method="_on_button_current_source_pressed"]
+[connection signal="child_entered_tree" from="Graph" to="." method="_on_graph_child_entered_tree"]
+[connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
+
+[editable path="FoldableContainer"]
+[editable path="Panel"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://x6rpn0fennw2"]
+
+[ext_resource type="Script" uid="uid://bgnvgoq883v3u" path="res://popup_windows/one_button.gd" id="1_ssom1"]
+
+[node name="Window" type="Window"]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(345, 165)
+script = ExtResource("1_ssom1")
+
+[node name="Dialog" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 45.0
+offset_right = 337.0
+offset_bottom = 68.0
+text = "This is a label"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OK Button" type="Button" parent="."]
+offset_left = 157.0
+offset_top = 105.0
+offset_right = 188.0
+offset_bottom = 136.0
+text = "OK"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="OK Button" to="." method="_on_ok_button_pressed"]
