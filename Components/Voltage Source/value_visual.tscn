@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgcqca7xv4cid"]
+
+[ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="1_vo1sb"]
+[ext_resource type="Script" uid="uid://dt0haubik34xw" path="res://Components/Voltage Source/line_edit.gd" id="2_ykga6"]
+
+[sub_resource type="Theme" id="Theme_e5a3p"]
+
+[node name="LineEdit" type="LineEdit"]
+offset_left = -2280.0
+offset_top = -760.00006
+offset_right = -1084.0
+offset_bottom = -387.00006
+scale = Vector2(1.8676465, 1.8676465)
+theme = SubResource("Theme_e5a3p")
+theme_override_fonts/font = ExtResource("1_vo1sb")
+theme_override_font_sizes/font_size = 300
+placeholder_text = "0"
+alignment = 1
+flat = true
+select_all_on_focus = true
+script = ExtResource("2_ykga6")
+
+[connection signal="text_submitted" from="." to="." method="_on_text_submitted"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfpiupp15il6d"]
+[gd_scene load_steps=9 format=3 uid="uid://bfpiupp15il6d"]
 
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_anlt7"]
 [ext_resource type="Script" uid="uid://uwjdn8ciimkh" path="res://Components/Resistor/resistor.gd" id="1_j3p18"]
@@ -9,6 +9,11 @@
 [sub_resource type="Theme" id="Theme_iwnpr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mlmyw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jgr0a"]
+line_spacing = 8.0
+font = ExtResource("3_msrb1")
+font_size = 500
 
 [node name="Resistor" type="Node2D"]
 scale = Vector2(0.08, 0.08)
@@ -69,6 +74,16 @@ visible = false
 self_modulate = Color(1, 1, 1, 0.39215687)
 position = Vector2(737.5, 12.5)
 texture = ExtResource("3_iwnpr")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -187.5
+offset_top = 162.5
+offset_right = -186.5
+offset_bottom = 961.5
+scale = Vector2(1, 0.637)
+label_settings = SubResource("LabelSettings_jgr0a")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="editing_toggled" from="LineEdit" to="." method="_on_line_edit_editing_toggled"]
 [connection signal="editing_toggled" from="LineEdit" to="LineEdit" method="_on_editing_toggled"]

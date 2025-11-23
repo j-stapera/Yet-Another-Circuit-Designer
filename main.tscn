@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5guqm1eybxig"]
+[gd_scene load_steps=13 format=3 uid="uid://c5guqm1eybxig"]
 
 [ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="2_1bvp3"]
@@ -6,6 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://j4626myjd2u7" path="res://Components/Inductor/inductor.png" id="4_7mycd"]
 [ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://dqqaaseor1laa" path="res://connection_graph.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://graph.gd" id="6_272bh"]
+[ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="6_kek77"]
+[ext_resource type="Script" uid="uid://cr2hvxlsuuapi" path="res://solver.gd" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://cr0g1icuovaat" path="res://kvl.gd" id="10_4c57u"]
+[ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://loop_detection.gd" id="11_efxa6"]
+[ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://mesh_loop.gd" id="12_dg77c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
 
@@ -67,6 +73,22 @@ icon = ExtResource("4_7mycd")
 icon_alignment = 1
 expand_icon = true
 
+[node name="Button" type="Button" parent="Container"]
+layout_mode = 0
+offset_left = 972.0
+offset_top = 31.0
+offset_right = 1134.0
+offset_bottom = 62.0
+text = "Detect Components"
+
+[node name="Button Current Source" type="Button" parent="Container"]
+layout_mode = 0
+offset_left = 91.0
+offset_right = 2019.0
+offset_bottom = 1928.0
+scale = Vector2(0.02, 0.02)
+icon = ExtResource("6_kek77")
+
 [node name="WireMode" type="Node2D" parent="."]
 
 [node name="Graph" type="Node2D" parent="."]
@@ -120,3 +142,7 @@ Circuit"
 [connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Wire" to="." method="_on_button_wire_pressed"]
 [connection signal="child_entered_tree" from="Graph" to="." method="_on_graph_child_entered_tree"]
 [connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
+[connection signal="pressed" from="Button" to="Solver" method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="Loop Detection" method="_on_button_2_pressed"]
+[connection signal="pressed" from="Button3" to="KVL" method="_on_button_3_pressed"]
+[connection signal="pressed" from="Button3" to="Mesh Loop" method="_on_button_3_pressed"]
