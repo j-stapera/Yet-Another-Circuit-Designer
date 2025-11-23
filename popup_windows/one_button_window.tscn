@@ -2,15 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bgnvgoq883v3u" path="res://popup_windows/one_button.gd" id="1_ssom1"]
 
-[node name="Node2D" type="Node2D"]
-
-[node name="Window" type="Window" parent="."]
+[node name="Window" type="Window"]
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(345, 165)
 script = ExtResource("1_ssom1")
 
-[node name="Label" type="Label" parent="Window"]
+[node name="Dialog" type="Label" parent="."]
 offset_left = 10.0
 offset_top = 45.0
 offset_right = 337.0
@@ -19,11 +17,12 @@ text = "This is a label"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Window"]
+[node name="OK Button" type="Button" parent="."]
 offset_left = 157.0
 offset_top = 105.0
 offset_right = 188.0
 offset_bottom = 136.0
 text = "OK"
 
-[connection signal="close_requested" from="Window" to="Window" method="_on_close_requested"]
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="OK Button" to="." method="_on_ok_button_pressed"]

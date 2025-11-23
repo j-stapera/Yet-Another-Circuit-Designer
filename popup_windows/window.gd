@@ -1,9 +1,10 @@
 extends Window
 
-@onready var label = $Label
+@onready var label = $Dialog
 
 
 func change_label(new_text):
+	print("Accessing")
 	label.text = new_text
 
 
