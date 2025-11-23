@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c5guqm1eybxig"]
+[gd_scene load_steps=12 format=3 uid="uid://c5guqm1eybxig"]
 
 [ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="2_1bvp3"]
@@ -8,10 +8,9 @@
 [ext_resource type="Script" uid="uid://dqqaaseor1laa" path="res://connection_graph.gd" id="6_7mycd"]
 [ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://graph.gd" id="6_272bh"]
 [ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="6_kek77"]
-[ext_resource type="Script" uid="uid://cr2hvxlsuuapi" path="res://solver.gd" id="8_5vw27"]
-[ext_resource type="Script" uid="uid://cr0g1icuovaat" path="res://kvl.gd" id="10_4c57u"]
-[ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://loop_detection.gd" id="11_efxa6"]
-[ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://mesh_loop.gd" id="12_dg77c"]
+[ext_resource type="Script" path="res://solver.gd" id="8_5vw27"]
+[ext_resource type="Script" path="res://loop_detection.gd" id="11_efxa6"]
+[ext_resource type="Script" path="res://mesh_loop.gd" id="12_dg77c"]
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_0xm2m")
@@ -100,9 +99,6 @@ offset_right = 1134.0
 offset_bottom = 101.0
 text = "Solve"
 
-[node name="KVL" type="Node" parent="."]
-script = ExtResource("10_4c57u")
-
 [node name="Loop Detection" type="Node" parent="."]
 script = ExtResource("11_efxa6")
 
@@ -136,5 +132,4 @@ script = ExtResource("12_dg77c")
 [connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
 [connection signal="pressed" from="Button" to="Solver" method="_on_button_pressed"]
 [connection signal="pressed" from="Button2" to="Loop Detection" method="_on_button_2_pressed"]
-[connection signal="pressed" from="Button3" to="KVL" method="_on_button_3_pressed"]
 [connection signal="pressed" from="Button3" to="Mesh Loop" method="_on_button_3_pressed"]
