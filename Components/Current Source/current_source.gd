@@ -1,31 +1,32 @@
-class_name VoltageSource
+class_name CurrentSource
 extends Component
 
-var voltage = 10.0
+var current = 1.0  # Amperes
 static var counter = 0
 
 func _ready():
-	component_type = "voltage_source"
+	component_type = "current_source"
 	id = get_prefix() + str(counter)
 	counter += 1
 	
+	# Set up UI
 	label = $LineEdit
 	id_label = $Label
-	label.text = str(voltage)
+	label.text = str(current)
 	id_label.text = id
 
 func get_value():
-	return voltage
+	return current
 
 func set_value(new_value):
-	voltage = new_value
+	current = new_value
 	if label:
-		label.text = str(voltage)
-	print("Voltage changed to ", voltage)
+		label.text = str(current)
+	print("Current changed to ", current)
 
 func get_prefix() -> String:
-	return "V"
+	return "I"
 
 func _on_line_edit_text_submitted(new_text):
-	var v = new_text.to_float()
-	set_value(v)
+	var i = new_text.to_float()
+	set_value(i)

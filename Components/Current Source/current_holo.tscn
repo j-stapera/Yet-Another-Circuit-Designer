@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyieyun1ixdxj"]
+
+[ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="1_i1aa1"]
+
+[node name="current_holo" type="Sprite2D"]
+self_modulate = Color(1, 1, 1, 0.3647059)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_i1aa1")
