@@ -1,10 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://bfpiupp15il6d"]
+[gd_scene load_steps=11 format=3 uid="uid://bfpiupp15il6d"]
 
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_anlt7"]
 [ext_resource type="Script" uid="uid://uwjdn8ciimkh" path="res://Components/Resistor/resistor.gd" id="1_j3p18"]
+[ext_resource type="Shader" uid="uid://hww4mwvnaynk" path="res://Components/outline_glow.gdshader" id="2_jgr0a"]
 [ext_resource type="Texture2D" uid="uid://wd0s0yii56ma" path="res://misc/bubble.png" id="3_iwnpr"]
 [ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="3_msrb1"]
 [ext_resource type="Script" uid="uid://cmnnlrc586hgi" path="res://Components/Resistor/text.gd" id="4_bke0b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7axp2"]
+shader = ExtResource("2_jgr0a")
+shader_parameter/line_colour = Color(0.26785484, 0.8365346, 0.8269338, 1)
+shader_parameter/line_thickness = 0.042000001995
+shader_parameter/border_visibility = 0.322000015295
+shader_parameter/gradient_intensity = 4.09200019437
+shader_parameter/gradient_steps = 12.402000541595
 
 [sub_resource type="Theme" id="Theme_iwnpr"]
 
@@ -20,6 +29,7 @@ scale = Vector2(0.08, 0.08)
 script = ExtResource("1_j3p18")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_7axp2")
 texture = ExtResource("1_anlt7")
 
 [node name="LineEdit" type="LineEdit" parent="."]

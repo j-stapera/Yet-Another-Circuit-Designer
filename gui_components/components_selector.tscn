@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjto5eyl021c"]
+[gd_scene load_steps=10 format=3 uid="uid://cjto5eyl021c"]
 
+[ext_resource type="Shader" uid="uid://06jxgrc6c4vo" path="res://gui_components/components_selector.gdshader" id="1_k48y5"]
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_tnxru"]
 [ext_resource type="Texture2D" uid="uid://dlp8dpyy38cpp" path="res://Components/Capacitor/capacitor.png" id="2_6ojnw"]
 [ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="3_xdpdu"]
@@ -7,9 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://bjourckn1ul6j" path="res://Components/wire.png" id="4_xdpdu"]
 [ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="5_6ojnw"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xdpdu"]
+shader = ExtResource("1_k48y5")
+shader_parameter/amount = 3.5060001665350002
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
 
 [node name="FoldableContainer" type="FoldableContainer"]
+material = SubResource("ShaderMaterial_xdpdu")
 offset_left = 52.0
 offset_top = 23.0
 offset_right = 180.0
