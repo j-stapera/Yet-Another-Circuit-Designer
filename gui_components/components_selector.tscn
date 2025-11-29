@@ -14,64 +14,71 @@ shader_parameter/amount = 3.506000166535
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
 
-[node name="FoldableContainer" type="FoldableContainer"]
-material = SubResource("ShaderMaterial_xdpdu")
-offset_left = 52.0
-offset_top = 23.0
-offset_right = 180.0
-offset_bottom = 489.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_7mycd")
-title = "Tools"
+[node name="Container" type="Container"]
+offset_top = 31.0
+offset_right = 232.0
+offset_bottom = 543.0
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="FoldableContainer" type="FoldableContainer" parent="."]
+material = SubResource("ShaderMaterial_xdpdu")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7mycd")
+title = "                        "
+
+[node name="MarginContainer" type="MarginContainer" parent="FoldableContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Button Resistor" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Button Resistor" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 icon = ExtResource("1_tnxru")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button Capacitor" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Button Capacitor" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 icon = ExtResource("2_6ojnw")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button Voltage Source" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Button Voltage Source" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 icon = ExtResource("3_xdpdu")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button Wire" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Button Wire" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 icon = ExtResource("4_xdpdu")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button Inductor" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Button Inductor" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 icon = ExtResource("4_k48y5")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button Current Source" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Button Current Source" type="Button" parent="FoldableContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 icon = ExtResource("5_6ojnw")
 icon_alignment = 1
 expand_icon = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Tools"
