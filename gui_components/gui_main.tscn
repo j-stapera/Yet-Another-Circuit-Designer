@@ -1,11 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5guqm1eybxig"]
+[gd_scene load_steps=9 format=3 uid="uid://c5guqm1eybxig"]
 
 [ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main.gd" id="1_hru16"]
 [ext_resource type="PackedScene" uid="uid://cjto5eyl021c" path="res://gui_components/components_selector.tscn" id="2_txhx8"]
 [ext_resource type="PackedScene" uid="uid://uo4go1gio6sk" path="res://gui_components/copy-paste_panel.tscn" id="3_e8s8u"]
+[ext_resource type="Shader" uid="uid://06jxgrc6c4vo" path="res://gui_components/glass-panels.gdshader" id="4_5fog6"]
 [ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://graph.gd" id="4_n14rv"]
 [ext_resource type="Texture2D" uid="uid://dgiiu0xxtwkp3" path="res://6229893.jpg" id="5_e8s8u"]
 [ext_resource type="Script" uid="uid://dqqaaseor1laa" path="res://connection_graph.gd" id="7_jjedt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n14rv"]
+shader = ExtResource("4_5fog6")
+shader_parameter/amount = 3.5060001665350002
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_hru16")
@@ -13,6 +18,7 @@ script = ExtResource("1_hru16")
 [node name="FoldableContainer" parent="." instance=ExtResource("2_txhx8")]
 
 [node name="Panel" parent="." instance=ExtResource("3_e8s8u")]
+material = SubResource("ShaderMaterial_n14rv")
 
 [node name="WireMode" type="Node2D" parent="."]
 
