@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://db63ky1lnlf21"]
+
+[ext_resource type="Texture2D" uid="uid://crq3j8o1edj4h" path="res://misc/question_mark.png" id="1_lkq7x"]
+
+[node name="Question" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.4249623, 0.4249623, 0.4249623, 1)
+scale = Vector2(0.005, 0.005)
+texture = ExtResource("1_lkq7x")
+
+[node name="Container" type="Container" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

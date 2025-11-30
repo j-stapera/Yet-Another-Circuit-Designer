@@ -118,4 +118,52 @@ func reorder_nodeName():
 	
 	print(nodes)
 	
+func validate_circuit():
+	for component_id in components.keys():
+		var component = components[component_id]
+		
+		if component.start_connections.has(component_id):
+			return {"valid": false, "error": "Component " + component_id + " is connected to itself"}
+		
+		if component.end_connections.has(component_id):
+			return {"valid": false, "error": "Component " + component_id + " is connected to itself"}
 	
+	var port_connection_count = {}
+	
+	for component_id in components.keys():
+		var start_port = component_id + "_start"
+		var end_port = component_id + "_end"
+		
+		port_connection_count[start_port] = 0
+		port_connection_count[end_port] = 0
+	
+	for component_id in components.keys():
+		var component = components[component_id]
+
+		for connected_id in component.start_connections.keys():
+			port_connection_count[component_id + "_start"] += 1
+		
+		for connected_id in component.end_connections.keys():
+			port_connection_count[component_id + "_end"] += 1
+	
+	for port in port_connection_count.keys():
+		if port_connection_count[port] == 0:
+			var component_id = port.split("_")[0]
+			return {"valid": false, "error": "Component " + component_id + " has a dangling connection at " + port}
+	
+	return {"valid": true, "error": ""}
+
+func get_component_instance(component_id):
+	# Return the actual visual instance of the component
+	# Assuming you store them somewhere accessible
+	# This could be in a dictionary, or as children of a container node
+	if has_node(component_id):
+		return get_node(component_id)
+	return null
+
+func run():
+	detect_components()
+	detect_connections()
+	initialize_nodes()
+	merge_nodes()
+	reorder_nodeName()

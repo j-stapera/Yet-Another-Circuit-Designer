@@ -16,17 +16,18 @@ font = ExtResource("3_msrb1")
 font_size = 500
 
 [node name="Resistor" type="Node2D"]
-scale = Vector2(0.08, 0.08)
+scale = Vector2(0.086, 0.086)
 script = ExtResource("1_j3p18")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.8140259, -4.651136)
 texture = ExtResource("1_anlt7")
 
 [node name="LineEdit" type="LineEdit" parent="."]
-offset_left = -612.5
-offset_top = -600.0
-offset_right = 583.5
-offset_bottom = -227.0
+offset_left = -609.686
+offset_top = -604.6511
+offset_right = 586.314
+offset_bottom = -231.65112
 theme = SubResource("Theme_iwnpr")
 theme_override_fonts/font = ExtResource("3_msrb1")
 theme_override_font_sizes/font_size = 300
@@ -39,14 +40,14 @@ script = ExtResource("4_bke0b")
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -550.00006
-offset_top = -125.0
-offset_right = -510.00006
-offset_bottom = -85.000305
+offset_left = -547.186
+offset_top = -129.65114
+offset_right = -507.18597
+offset_bottom = -89.65144
 scale = Vector2(27.638287, 6.63834)
 
 [node name="Start" type="Area2D" parent="."]
-position = Vector2(-4.7683716e-05, 0)
+position = Vector2(2.8139648, -4.651136)
 
 [node name="StartPos" type="CollisionShape2D" parent="Start"]
 unique_name_in_owner = true
@@ -61,7 +62,7 @@ position = Vector2(-737.5, 12.5)
 texture = ExtResource("3_iwnpr")
 
 [node name="End" type="Area2D" parent="."]
-position = Vector2(-4.7683716e-05, 0)
+position = Vector2(2.8139648, -4.651136)
 
 [node name="EndPos" type="CollisionShape2D" parent="End"]
 unique_name_in_owner = true
@@ -76,10 +77,10 @@ position = Vector2(737.5, 12.5)
 texture = ExtResource("3_iwnpr")
 
 [node name="Label" type="Label" parent="."]
-offset_left = -187.5
-offset_top = 162.5
-offset_right = -186.5
-offset_bottom = 961.5
+offset_left = -184.68597
+offset_top = 157.84886
+offset_right = -183.68597
+offset_bottom = 956.8489
 scale = Vector2(1, 0.637)
 label_settings = SubResource("LabelSettings_jgr0a")
 horizontal_alignment = 1

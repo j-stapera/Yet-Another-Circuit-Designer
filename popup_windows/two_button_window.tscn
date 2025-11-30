@@ -8,6 +8,7 @@ initial_position = 2
 size = Vector2i(335, 165)
 transient = true
 unresizable = true
+popup_window = true
 minimize_disabled = true
 maximize_disabled = true
 script = ExtResource("1_c02of")

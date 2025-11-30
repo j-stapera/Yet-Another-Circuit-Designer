@@ -2,19 +2,58 @@ extends Node
 
 @onready var Graph = $"../Graph"
 
+#var circuit_scn = preload("res://circuit_visual.tscn")
 
-func _on_button_pressed():
+var solution_steps = []
+var equations = [] 
+var variables = [] 
+
+
+func run():
+	solution_steps.clear()
+	equations.clear()
+	variables.clear()
+	
+	add_step("Step 1: Select Ground Node")
 	var ground_node = select_ground_node()
+	add_step_result("Ground node: " + ground_node + " = 0V")
+	
+	add_step("Step 2: Identify Unknown Variables")
 	var node_indices = create_node_indices(ground_node)
 	
-	var num_nodes = node_indices.size()
-	var num_voltage_sources = count_voltage_sources()
-	var matrix_size = num_nodes + num_voltage_sources
+	for node_name in node_indices.keys():
+		variables.append("V" + node_name)
 	
+	var num_voltage_sources = count_voltage_sources()
+	for i in range(num_voltage_sources):
+		variables.append("I" + str(i + 1))
+	
+	add_step_result("Unknown variables: " + ", ".join(variables))
+	
+
+	add_step("Step 3: Apply KCL at Each Node")
+	add_step_result("(Sum of currents leaving each node = 0)")
+	build_symbolic_equations(node_indices, ground_node)
+	
+
+	add_step("Step 4: Solve System of Equations")
+	display_system_of_equations()
+	
+	var num_nodes = node_indices.size()
+	var matrix_size = num_nodes + num_voltage_sources
 	var matrices = initialize_matrices(matrix_size)
 	var A = matrices["A"]
 	var B = matrices["B"]
 	
+	populate_matrices(A, B, node_indices, ground_node)
+	var solution = solve_linear_system(A,B)
+	
+
+	add_step("Step 5: Solutions")
+	
+	display_results(solution, node_indices, ground_node)
+
+func populate_matrices(A, B, node_indices, ground_node):
 	var vs_counter = 0
 	
 	for component_id in Graph.components.keys():
@@ -22,16 +61,201 @@ func _on_button_pressed():
 		
 		if component.component_type == "resistor":
 			add_resistor_to_matrix(A, component, node_indices)
-		
 		elif component.component_type == "voltage_source":
 			add_voltage_source_to_matrix(A, B, component, node_indices, vs_counter)
 			vs_counter += 1
-		
 		elif component.component_type == "current_source":
 			add_current_source_to_matrix(B, component, node_indices)
+
+func add_step(title):
+	solution_steps.append({"type": "step", "title": title})
+
+func add_step_result(text):
+	solution_steps.append({"type": "result", "text": text})
 	
-	var solution = solve_linear_system(A, B)
-	display_results(solution, node_indices, ground_node)
+
+
+func display_results(solution, node_indices, ground_node):
+	add_step_result("\nNode Voltages:")
+	add_step_result(ground_node + " = 0.000V (Ground)")
+	
+	for node_name in node_indices.keys():
+		var index = node_indices[node_name]
+		var voltage = solution[index]
+		add_step_result(node_name + " = " + ("%.3f" % voltage) + "V")
+	
+	var num_nodes = node_indices.size()
+	var vs_index = 0
+	
+	add_step_result("\nVoltage Source Currents:")
+	for component_id in Graph.components.keys():
+		var component = Graph.components[component_id]
+		if component.component_type == "voltage_source":
+			var current = solution[num_nodes + vs_index]
+			add_step_result(component_id + " = " + ("%.3f" % current) + "A")
+			vs_index += 1
+	
+	add_step_result("\nBranch Currents and Power:")
+	for component_id in Graph.components.keys():
+		var component = Graph.components[component_id]
+		if component.component_type == "resistor":
+			var info = calculate_resistor_values(component, solution, node_indices, ground_node)
+			component.set_current(info.current)
+			add_step_result(component_id + " (" + str(info.resistance) + "Ω): V=" + ("%.3f" % info.voltage) + "V, I=" + ("%.3f" % info.current) + "A, P=" + ("%.3f" % info.power) + "W")
+	
+	var soln_window = preload("res://solution_window.tscn").instantiate()
+	add_child(soln_window)
+	soln_window.populate_solution_text(solution_steps)
+
+
+func display_system_of_equations():
+	add_step_result("\nSystem of " + str(equations.size()) + " equations with " + str(variables.size()) + " unknowns:\n")
+	
+	for i in range(equations.size()):
+		add_step_result("  (" + str(i + 1) + ")  " + equations[i])
+	
+	add_step_result("")
+
+
+#func kcl_equations(node_indices, ground_node):
+	#var equations = []
+	#
+	#for node_name in node_indices.keys():
+		#var eq_parts = []
+		#var components_at_node = get_nodes_for_component(node_name)
+		#
+		#for comp_info in components_at_node:
+			#var component = comp_info.component
+			#var is_positive_terminal = comp_info.is_positive
+			#
+			#if component.component_type == "resistor":
+				#var other_node = comp_info.other_node
+				#var R = component.get_value()
+				#
+				#if is_positive_terminal:
+					#if other_node == ground_node:
+						#eq_parts.append("V" + node_name + "/" + str(R))
+					#else:
+						#eq_parts.append("(V" + node_name + " - V" + other_node + ")/" + str(R))
+				#else:
+					#if other_node == ground_node:
+						#eq_parts.append("-V" + node_name + "/" + str(R))
+					#else:
+						#eq_parts.append("(V" + other_node + " - V" + node_name + ")/" + str(R))
+			#
+			#elif component.component_type == "current_source":
+				#var I = component.get_value()
+				#if is_positive_terminal:
+					#eq_parts.append(str(I))
+				#else:
+					#eq_parts.append("-" + str(I))
+			#
+			#elif component.component_type == "voltage_source":
+				#var vs_index = "V" + component.id
+				#if is_positive_terminal:
+					#eq_parts.append("I_vs" + str(vs_index))
+				#else:
+					#eq_parts.append("-I_vs" + str(vs_index))
+		#
+		#var equation = "Node " + node_name + ": " + " + ".join(eq_parts) + " = 0"
+		#equations.append(equation)
+	#
+	#return equations
+
+func build_symbolic_equations(node_indices, ground_node):
+	var equation_number = 1
+	
+	# KCL equations for each node
+	for node_name in node_indices.keys():
+		var eq_str = build_kcl_equations(node_name, ground_node)
+		equations.append(eq_str)
+		add_step_result("Equation " + str(equation_number) + ": " + eq_str)
+		equation_number += 1
+	
+	# Voltage source constraint equations
+	var vs_counter = 1
+	for component_id in Graph.components.keys():
+		var component = Graph.components[component_id]
+		if component.component_type == "voltage_source":
+			var eq_str = build_voltage_source_equations(component_id, ground_node, vs_counter)
+			equations.append(eq_str)
+			add_step_result("Equation " + str(equation_number) + ": " + eq_str)
+			equation_number += 1
+			vs_counter += 1
+
+
+func build_kcl_equations(node_name, ground_node):
+	var terms = []
+	for component_id in Graph.components.keys():
+		var component = Graph.components[component_id]
+		var nodes = get_nodes_for_component(component_id)
+		var node1 = nodes[0]  # start port
+		var node2 = nodes[1]  # end port
+		
+		var connected_at_start = (node1 == node_name)
+		var connected_at_end = (node2 == node_name)
+		
+		if not connected_at_start and not connected_at_end:
+			continue
+		
+		if component.component_type == "resistor":
+			var R = component.get_value()
+			var other_node = node2 if connected_at_start else node1
+			var term = ""
+			if other_node == ground_node:
+				term = "V" + node_name + "/" + str(R)
+			else:
+				term = "(V" + node_name + " - V" + other_node + ")/" + str(R)
+			terms.append(term)
+		
+		elif component.component_type == "current_source":
+			var I = component.get_value()
+			if connected_at_start:
+				terms.append(str(I))
+			else:
+				terms.append(str(-I))
+		
+		elif component.component_type == "voltage_source":
+			var vs_index = get_voltage_source_index(component_id)
+			var I_name = "I" + str(vs_index + 1)
+			if connected_at_start:
+				terms.append(I_name)
+			else:
+				terms.append("-" + I_name)
+	
+	var equation = " + ".join(terms) + " = 0"
+	equation = equation.replace(" + -", " - ")
+	
+	return equation
+
+
+
+func build_voltage_source_equations(component_id, ground_node, vs_number):
+	var component = Graph.components[component_id]
+	var V = component.get_value()
+	var nodes = get_nodes_for_component(component_id)
+	var neg_node = nodes[0]
+	var pos_node = nodes[1]
+	
+	var left_side = ""
+	
+	if pos_node == ground_node:
+		left_side = "0"
+	else:
+		left_side = "V" + pos_node
+	
+	left_side += " - "
+	
+	if neg_node == ground_node:
+		left_side += "0"
+	else:
+		left_side += "V" + neg_node
+	
+	left_side = left_side.replace(" - 0", "")
+	if left_side == "0 - ":
+		left_side = "-"
+	
+	return left_side + " = " + str(V)
 
 
 func solve_linear_system(A, B):
@@ -46,15 +270,12 @@ func solve_linear_system(A, B):
 	print("Initial augmented matrix:")
 	print_matrix(augmented)
 	
-	#forward elimination
 	for col in range(n):
-		#find pivot
 		var max_row = col
 		for row in range(col + 1, n):
 			if abs(augmented[row][col]) > abs(augmented[max_row][col]):
 				max_row = row
 		
-		#swap rows
 		if max_row != col:
 			var temp = augmented[col]
 			augmented[col] = augmented[max_row]
@@ -64,7 +285,6 @@ func solve_linear_system(A, B):
 			push_error("Matrix is singular at column " + str(col))
 			return null
 		
-		#eliminate
 		for row in range(col + 1, n):
 			var factor = augmented[row][col] / augmented[col][col]
 			for j in range(col, n + 1):
@@ -73,13 +293,12 @@ func solve_linear_system(A, B):
 	print("After forward elimination:")
 	print_matrix(augmented)
 	
-	#back substitution
 	var x = []
 	for i in range(n):
 		x.append(0.0)
 	
 	for i in range(n - 1, -1, -1):
-		var sum = augmented[i][n]  #right-hand side
+		var sum = augmented[i][n]
 		
 		for j in range(i + 1, n):
 			sum -= augmented[i][j] * x[j]
@@ -232,7 +451,15 @@ func calculate_current_source_voltage(component, solution, node_indices, ground_
 		"power": power
 	}
 
-	
+func get_voltage_source_index(component_id):
+	var index = 0
+	for cid in Graph.components.keys():
+		if cid == component_id:
+			return index
+		if Graph.components[cid].component_type == "voltage_source":
+			index += 1
+	return -1
+
 func get_nodes_for_component(component_id):
 	var start_port = component_id + "_start"
 	var end_port = component_id + "_end"
@@ -271,46 +498,3 @@ func calculate_resistor_values(component, solution, node_indices, ground_node):
 		"current": abs(current),
 		"power": abs(power)
 	}
-
-func display_results(solution, node_indices, ground_node):
-	if solution == null:
-		print("ERROR: Could not solve circuit (singular matrix)")
-		return
-	
-	print("\nCIRCUIT ANALYSIS RESULTS")
-	print("\nNode Voltages")
-	print(ground_node, ": 0.000 V (Ground)")
-	for node_name in node_indices.keys():
-		var index = node_indices[node_name]
-		var voltage = solution[index]
-		print(node_name, ": ", "%.3f" % voltage, " V")
-	
-	var num_nodes = node_indices.size()
-	var vs_index = 0
-	print("\n--- Voltage Source Currents ---")
-	for component_id in Graph.components.keys():
-		var component = Graph.components[component_id]
-		if component.component_type == "voltage_source":
-			var current = solution[num_nodes + vs_index]
-			print(component_id, ": ", "%.3f" % current, " A")
-			vs_index += 1
-			
-	print("\nCurrent Sources")
-	for component_id in Graph.components.keys():
-		var component = Graph.components[component_id]
-		if component.component_type == "current_source":
-			var current = component.get_value()
-			var voltage_info = calculate_current_source_voltage(component, solution, node_indices, ground_node)
-			print(component_id, " (", current, " A):")
-			print("  Voltage across: ", "%.3f" % voltage_info.voltage, " V")
-			print("  Power: ", "%.3f" % voltage_info.power, " W")
-			
-	print("\nResistor Analysis")
-	for component_id in Graph.components.keys():
-		var component = Graph.components[component_id]
-		if component.component_type == "resistor":
-			var resistor_info = calculate_resistor_values(component, solution, node_indices, ground_node)
-			print(component_id, " (", resistor_info.resistance, " Ω):")
-			print("  Voltage: ", "%.3f" % resistor_info.voltage, " V")
-			print("  Current: ", "%.3f" % resistor_info.current, " A")
-			print("  Power: ", "%.3f" % resistor_info.power, " W")

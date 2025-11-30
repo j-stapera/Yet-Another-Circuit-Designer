@@ -1,19 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5guqm1eybxig"]
+[gd_scene load_steps=11 format=3 uid="uid://bktehlqxhshtb"]
 
-[ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main.gd" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="2_1bvp3"]
-[ext_resource type="Texture2D" uid="uid://dlp8dpyy38cpp" path="res://Components/Capacitor/capacitor.png" id="3_lquwl"]
-[ext_resource type="Texture2D" uid="uid://j4626myjd2u7" path="res://Components/Inductor/inductor.png" id="4_7mycd"]
-[ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="5_lquwl"]
-[ext_resource type="Script" uid="uid://dqqaaseor1laa" path="res://connection_graph.gd" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://graph.gd" id="6_272bh"]
-[ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="6_kek77"]
-[ext_resource type="Script" path="res://solver.gd" id="8_5vw27"]
-[ext_resource type="Script" path="res://loop_detection.gd" id="11_efxa6"]
-[ext_resource type="Script" path="res://mesh_loop.gd" id="12_dg77c"]
+[ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_8b8fu"]
+[ext_resource type="Texture2D" uid="uid://dlp8dpyy38cpp" path="res://Components/Capacitor/capacitor.png" id="2_8iixi"]
+[ext_resource type="Texture2D" uid="uid://j4626myjd2u7" path="res://Components/Inductor/inductor.png" id="3_3i5n8"]
+[ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="4_iedb8"]
+[ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="5_8mcut"]
+[ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://graph.gd" id="6_sstwu"]
+[ext_resource type="Script" uid="uid://dqqaaseor1laa" path="res://connection_graph.gd" id="7_ofl1q"]
+[ext_resource type="Script" uid="uid://cr2hvxlsuuapi" path="res://solver.gd" id="8_vh6wt"]
+[ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://loop_detection.gd" id="9_x3243"]
+[ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://mesh_loop.gd" id="10_n2676"]
 
-[node name="main" type="Node2D"]
-script = ExtResource("1_0xm2m")
+[node name="old_main" type="Node2D"]
 
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
@@ -28,7 +26,7 @@ offset_top = 1.0
 offset_right = 2013.0
 offset_bottom = 759.0
 scale = Vector2(0.04, 0.04)
-icon = ExtResource("2_1bvp3")
+icon = ExtResource("1_8b8fu")
 
 [node name="Button Capacitor" type="Button" parent="Container"]
 layout_mode = 0
@@ -37,7 +35,7 @@ offset_top = 35.0
 offset_right = 2013.0
 offset_bottom = 990.0
 scale = Vector2(0.04, 0.035)
-icon = ExtResource("3_lquwl")
+icon = ExtResource("2_8iixi")
 
 [node name="Button Inductor" type="Button" parent="Container"]
 layout_mode = 0
@@ -46,7 +44,7 @@ offset_top = 77.0
 offset_right = 2013.0
 offset_bottom = 752.0
 scale = Vector2(0.04, 0.04)
-icon = ExtResource("4_7mycd")
+icon = ExtResource("3_3i5n8")
 
 [node name="Button Voltage Source" type="Button" parent="Container"]
 layout_mode = 0
@@ -55,7 +53,7 @@ offset_top = 111.0
 offset_right = 2013.0
 offset_bottom = 1066.0
 scale = Vector2(0.04, 0.035)
-icon = ExtResource("5_lquwl")
+icon = ExtResource("4_iedb8")
 
 [node name="Button Wire" type="Button" parent="Container"]
 layout_mode = 0
@@ -79,18 +77,18 @@ offset_left = 91.0
 offset_right = 2019.0
 offset_bottom = 1928.0
 scale = Vector2(0.02, 0.02)
-icon = ExtResource("6_kek77")
+icon = ExtResource("5_8mcut")
 
 [node name="WireMode" type="Node2D" parent="."]
 
 [node name="Graph" type="Node" parent="."]
-script = ExtResource("6_272bh")
+script = ExtResource("6_sstwu")
 
 [node name="ConnectionGraph" type="Node" parent="."]
-script = ExtResource("6_7mycd")
+script = ExtResource("7_ofl1q")
 
 [node name="Solver" type="Node" parent="."]
-script = ExtResource("8_5vw27")
+script = ExtResource("8_vh6wt")
 
 [node name="Button" type="Button" parent="."]
 offset_left = 1085.0
@@ -100,7 +98,7 @@ offset_bottom = 101.0
 text = "Solve"
 
 [node name="Loop Detection" type="Node" parent="."]
-script = ExtResource("11_efxa6")
+script = ExtResource("9_x3243")
 
 [node name="Button2" type="Button" parent="."]
 offset_left = 1025.0
@@ -122,7 +120,7 @@ offset_bottom = 188.0
 text = "Solve KVL"
 
 [node name="Mesh Loop" type="Node" parent="."]
-script = ExtResource("12_dg77c")
+script = ExtResource("10_n2676")
 
 [connection signal="pressed" from="Container/Button Resistor" to="." method="_on_button_resistor_pressed"]
 [connection signal="pressed" from="Container/Button Voltage Source" to="." method="_on_button_voltage_source_pressed"]

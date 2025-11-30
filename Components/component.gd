@@ -7,14 +7,28 @@ var component_type: String
 var hover = false
 var start_connections: Dictionary = {}
 var end_connections: Dictionary = {}
-
+var current: float
 
 signal port_clicked(component_id, port_name, position)
 
+const info_window = preload("res://popup_windows/informational_window.tscn")
 
 @onready var label: LineEdit
 @onready var id_label: Label
 
+func set_id():
+	pass
+
+func get_id():
+	pass
+
+func get_current():
+	return current
+
+func set_current(new_current: float):
+	#var new_value_string = str(new_value)
+	#current = new_value_string
+	current = new_current
 
 func get_value():
 	return 0
@@ -24,7 +38,6 @@ func set_value(new_value):
 
 func get_prefix() -> String:
 	return ""
-
 
 func _process(_delta):
 	handle_movement()
@@ -66,6 +79,33 @@ func _on_start_input_event(_viewport, event, _shape_idx):
 func _on_end_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		emit_signal("port_clicked", id, "end", %EndPos.global_position)
+		
+func _on_container_gui_input(event):
+		if event is InputEventMouseButton and event.is_pressed():
+			if event.is_double_click():
+				display_info()
+
+func display_info():
+	var info_instance = info_window.instantiate()
+	add_child(info_instance)
+	
+	var id_text = info_instance.find_child("Name")
+	var value_text = info_instance.find_child("Value")
+	var current_text = info_instance.find_child("LineEdit")
+	
+	id_text.text = "Name: " + id
+	
+	if get_prefix() == "R":
+		value_text.text = "Resistance: " + str(get_value())
+		current_text.text = "%.4f" % get_current()
+			
+			
+	if get_prefix() == "V":
+		value_text.text = "Voltage: " + str(get_value())
+	current_text.text_submitted.connect(_on_text_submitted)
+	
+func _on_text_submitted(new_text):
+	set_current(int(new_text))
 
 func set_connection(port, connected_id, connected_port):
 	if port == "start":
