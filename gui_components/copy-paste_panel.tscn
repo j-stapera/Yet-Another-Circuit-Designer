@@ -133,7 +133,7 @@ popup/item_1/id = 1
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_rqqne")
 layout_mode = 2
-text = "Engineer UI"
+text = "Graphic Designer UI"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Check Button" to="." method="_on_check_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Simplify Button" to="." method="_on_simplify_button_pressed"]

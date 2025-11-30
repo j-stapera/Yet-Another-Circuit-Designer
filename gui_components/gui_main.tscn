@@ -52,8 +52,15 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = SubResource("Theme_34iq7")
 
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_top = 4.0
+offset_right = 127.0
+offset_bottom = 31.0
+text = "  > Tools"
+
 [connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
 [connection signal="pressed" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/Check Button" to="Graph" method="_on_check_button_pressed"]
+[connection signal="toggled" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/ThemeToggle" to="CanvasLayer/FoldableContainer" method="_on_theme_toggle_toggled"]
 [connection signal="gui_input" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_mouse_exited"]
