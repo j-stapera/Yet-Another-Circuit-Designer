@@ -15,5 +15,5 @@ func clear_wire():
 	points_list.clear()
 
 func finalize_wire():
-	default_color = Color.BLACK
+	default_color = Color.WHITE
 	width = 3
