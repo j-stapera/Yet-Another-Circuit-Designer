@@ -1,10 +1,10 @@
 shader_type canvas_item;
 
-uniform vec4 line_colour : source_color = vec4(0.5); // default = white
-uniform float line_thickness : hint_range(0, 0.1) = 0.04; // the max distance from a transparent fragment to search for an opaque pixel - effectively the line width as named
-uniform float border_visibility : hint_range(0, 1) = 1.0; // control to fade border in and out
-uniform float gradient_intensity : hint_range(0, 5) = 3; // controls how quickly the gradient falls off
-uniform float gradient_steps : hint_range(1, 20) = 10; // controls the 'fineness' of the gradient
+uniform vec4 line_colour : source_color = vec4(0.26785484, 0.8365346, 0.8269338, 1); // default = white
+uniform float line_thickness : hint_range(0, 0.1) = 0.042; // the max distance from a transparent fragment to search for an opaque pixel - effectively the line width as named
+uniform float border_visibility : hint_range(0, 1) = 0.322; // control to fade border in and out
+uniform float gradient_intensity : hint_range(0, 5) = 4.092; // controls how quickly the gradient falls off
+uniform float gradient_steps : hint_range(1, 20) = 12.402; // controls the 'fineness' of the gradient
 
 // the directions to search for an opaque pixel - each a point on the unit circle (full distance multiplies this by line_thickness)
 // more directions = more accurate detection = better results around curved edges or corners

@@ -3,7 +3,7 @@ extends Component
 
 var resistance = 5000.0
 static var counter = 0
-
+@onready var shader = preload("res://Components/outline_glow.gdshader")
 func _ready():
 	component_type = "resistor"
 	id = get_prefix() + str(counter)
@@ -13,6 +13,7 @@ func _ready():
 	id_label = $Label
 	label.text = str(resistance)
 	id_label.text = id
+	Global.connect("theme_change", _update_theme)
 
 func get_value():
 	return resistance
@@ -29,6 +30,12 @@ func get_prefix() -> String:
 func _on_line_edit_text_submitted(new_text):
 	var res = new_text.to_float()
 	set_value(res)
+
+func _update_theme(newValue):
+	if(newValue == false):
+		get_node("Sprite2D").get_material().shader = null
+	else:
+		get_node("Sprite2D").get_material().shader = shader
 
 #func on_input(event):
 	#if event is InputEventMouseButton and event.is_pressed():

@@ -1,7 +1,7 @@
 class_name CurrentSource
 extends Component
 
-
+@onready var shader = preload("res://Components/outline_glow.gdshader")
 static var counter = 0
 
 func _ready():
@@ -15,6 +15,7 @@ func _ready():
 	id_label = $Label
 	label.text = str(current)
 	id_label.text = id
+	Global.connect("theme_change", _update_theme)
 
 func get_value():
 	return current
@@ -31,3 +32,9 @@ func get_prefix() -> String:
 func _on_line_edit_text_submitted(new_text):
 	var i = new_text.to_float()
 	set_value(i)
+	
+func _update_theme(newValue):
+	if(newValue == false):
+		get_node("CurrentSource").get_material().shader = null
+	else:
+		get_node("CurrentSource").get_material().shader = shader

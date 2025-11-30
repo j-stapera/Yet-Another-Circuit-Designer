@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://ceclpv60gktqs"]
+[gd_scene load_steps=9 format=3 uid="uid://ceclpv60gktqs"]
 
 [ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="1_7pd0a"]
 [ext_resource type="Script" uid="uid://d0tslhf5jv2sh" path="res://Components/Current Source/current_source.gd" id="1_fgipw"]
 [ext_resource type="Texture2D" uid="uid://wd0s0yii56ma" path="res://misc/bubble.png" id="2_my1k3"]
 [ext_resource type="PackedScene" uid="uid://bgcqca7xv4cid" path="res://Components/Voltage Source/value_visual.tscn" id="3_fgipw"]
 [ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="4_7nbh6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fgipw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5ms80"]
 
@@ -18,6 +20,7 @@ scale = Vector2(0.06, 0.06)
 script = ExtResource("1_fgipw")
 
 [node name="CurrentSource" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fgipw")
 position = Vector2(-1, -3)
 texture = ExtResource("1_7pd0a")
 
