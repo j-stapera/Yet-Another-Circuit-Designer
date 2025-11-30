@@ -50,6 +50,7 @@ func _on_solve_pressed() -> void:
 
 
 func _on_theme_toggle_toggled(toggled_on: bool) -> void:
+	Global.currentTheme = toggled_on
 	Global.emit_signal("theme_change", toggled_on)
 	if(toggled_on == false):
 		get_material().shader = null

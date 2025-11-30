@@ -15,6 +15,7 @@ func _ready():
 	label.text = str(voltage)
 	id_label.text = id
 	Global.connect("theme_change", _update_theme)
+	_update_theme(Global.currentTheme)
 
 func get_value():
 	return voltage
