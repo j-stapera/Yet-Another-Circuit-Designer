@@ -66,26 +66,21 @@ func snap_to_grid_component(pos):
 	var half_grid = Global.grid_size / 2.0
 	var rotation_mod = fmod(abs(holo_node.rotation_degrees), 180)
 	
-	# Determine if component is currently in "rotated" state (90° or 270°)
+
 	var is_rotated_90 = (rotation_mod > 45 && rotation_mod < 135)
-	
-	# Resistor: horizontal at 0°, vertical at 90°
-	# Voltage source: vertical at 0°, horizontal at 90°
 	var should_be_vertical = false
 	
 	if current_holo_scene == resistor_holoscn:
-		should_be_vertical = is_rotated_90  # Vertical when rotated 90°
+		should_be_vertical = is_rotated_90
 	elif current_holo_scene == voltageSource_holoscn:
-		should_be_vertical = !is_rotated_90  # Vertical when NOT rotated
+		should_be_vertical = !is_rotated_90
 	
 	if should_be_vertical:
-		# Snap to vertical gridlines (offset Y)
 		return Vector2(
 			round(pos.x / Global.grid_size) * Global.grid_size,
 			round(pos.y / Global.grid_size) * Global.grid_size + half_grid
 		)
 	else:
-		# Snap to horizontal gridlines (offset X)
 		return Vector2(
 			round(pos.x / Global.grid_size) * Global.grid_size + half_grid,
 			round(pos.y / Global.grid_size) * Global.grid_size
@@ -101,7 +96,6 @@ func _process(_delta):
 		cancel_selection()
 	
 	if Global.placing_wire and wire_instance:
-		# Update preview wire to follow mouse
 		var mouse_pos = get_global_mouse_position()
 		var snapped_pos = snap_to_grid(mouse_pos)
 		update_wire_preview(snapped_pos)
@@ -137,7 +131,6 @@ var wire_points = []
 
 
 func update_wire_preview(mouse_pos: Vector2):
-	# Clear current preview
 	wire_instance.clear_wire()
 	
 	# Redraw all existing segments

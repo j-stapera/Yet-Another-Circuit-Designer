@@ -501,32 +501,27 @@ func highlight_wire_nodes():
 	var color_index = 0
 
 	for node in wire_nodes.keys():
-	# Generate a distinct color for this node
 		if not node_colors.has(node):
 			node_colors[node] = generate_color(color_index)
 			color_index += 1
 	
-	# Apply the node's color to all its wires
 		for wire in wire_nodes.get(node):
 			wire.default_color = node_colors[node]
 	
-	# Add ONE label for this node on the first wire
 		if wire_nodes[node].size() > 0:
 			var first_wire = wire_nodes[node][0]
 			var label = Label.new()
 			label.text = node
 			label.add_theme_color_override("font_color", node_colors[node])
 		
-			# Position the label near the midpoint of the wire
 			if first_wire.points.size() > 0:
 				var midpoint = first_wire.points[first_wire.points.size() / 2]
-				label.position = midpoint + Vector2(20, -20)  # Increased offset
+				label.position = midpoint + Vector2(20, -20)  
 		
-		# Add label to the scene
 			first_wire.add_child(label)
-# Helper function to generate distinct colors using HSV
+
 func generate_color(index: int) -> Color:
-	var hue = float(index) * 0.618033988749895  # Golden ratio conjugate
+	var hue = float(index) * 0.618033988749895
 	hue = fmod(hue, 1.0)
 	return Color.from_hsv(hue, 0.8, 0.9)
 
