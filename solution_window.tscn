@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4djbtxu7nojf"]
+
+[ext_resource type="Script" uid="uid://dtm6j0eq3vchc" path="res://solution_window.gd" id="1_p3eht"]
+
+[sub_resource type="Theme" id="Theme_p3eht"]
+
+[node name="Window" type="Window"]
+oversampling_override = 1.0
+title = "Solution"
+initial_position = 1
+size = Vector2i(250, 500)
+transient = true
+popup_window = true
+script = ExtResource("1_p3eht")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_p3eht")
+bbcode_enabled = true
+fit_content = true
+context_menu_enabled = true
+threaded = true
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]

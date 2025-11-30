@@ -4,5 +4,5 @@
 
 [node name="VsHolo" type="Sprite2D"]
 self_modulate = Color(1, 1, 1, 0.28235295)
-scale = Vector2(0.05, 0.05)
+scale = Vector2(0.073, 0.073)
 texture = ExtResource("1_floj5")

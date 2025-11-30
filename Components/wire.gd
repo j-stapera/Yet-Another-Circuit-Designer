@@ -1,21 +1,19 @@
 extends Line2D
 
-## Need a proper algorithm to determine how to draw the wire. Currently just goes to the midpoint then matches y position
-func draw_wire(start: Vector2, end: Vector2):
-	print("Signal recieved")
-	var midpoint = (start.x + end.x) / 2
-	var pointB = Vector2(midpoint, start.y)
-	var pointC = Vector2(midpoint, end.y)
-	
+const GRID_SIZE = 32  # Adjust to your grid size
+
+var points_list = []
+
+func draw_wire_segment(start: Vector2, end: Vector2):
 	add_point(start)
-	add_point(pointB)
-	add_point(pointC)
 	add_point(end)
-	
-	print("wire drawn from start ", start, " to ", pointB, " to ", pointC, " to ", end)
+	points_list.append(start)
+	points_list.append(end)
 
+func clear_wire():
+	clear_points()
+	points_list.clear()
 
-#func draw_wire():
-	#if Global.wire_mode:
-		#pass
-		#
+func finalize_wire():
+	default_color = Color.BLACK
+	width = 3

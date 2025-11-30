@@ -2,6 +2,7 @@ extends Window
 
 @onready var label = $Dialog
 
+	
 
 func change_label(new_text):
 	print("Accessing")

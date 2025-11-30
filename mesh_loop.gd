@@ -2,90 +2,74 @@ extends Node
 
 var mesh_currents = []
 var loops = []
+var solution_steps = []
 @onready var loop_detection = $"../Loop Detection"
 @onready var Graph = $"../Graph"
 @onready var solver = $"../Solver"
 
-## I need to apply this function to the solver.gd as well. The goal is obviously not having this output to console, but rather as a UI component
-func create_step(title, description, content, equation):
-	return {
+func add_step(title, description = ""):
+	solution_steps.append({
+		"type": "step",
 		"title": title,
-		"description": description,
-		"content": content,
-		"equation": equation
-	}
+		"description": description
+	})
+
+func add_step_result(text):
+	solution_steps.append({
+		"type": "result",
+		"text": text
+	})
+
+func add_step_equation(equation_text):
+	solution_steps.append({
+		"type": "equation",
+		"text": equation_text
+	})
 	
 func solve_mesh_analysis():
 	if loops.size() == 0:
 		print("ERROR: No loops detected. Run detect_loops() first.")
 		return
 	
-	var steps = []
+	solution_steps.clear()
 	
-	steps.append(create_step(
-		"Step 1: Identify Independent Meshes",
-		"Found " + str(loops.size()) + " independent mesh loops",
-		format_all_meshes(),
-		""
-	))
+	add_step("Step 1: Identify Independent Meshes", "Found " + str(loops.size()) + " independent mesh loops")
+	add_step_result(format_all_meshes())
 	
-	var mesh_assignments = assign_mesh_currents()
-	steps.append(create_step(
-		"Step 2: Assign Mesh Current Variables",
-		"Each mesh gets its own current variable flowing clockwise",
-		mesh_assignments.description,
-		""
-	))
+	add_step("Step 2: Assign Mesh Current Variables", "Each mesh gets its own current variable flowing clockwise")
+	for i in range(loops.size()):
+		add_step_result("Mesh " + str(i + 1) + ": Current I" + str(i + 1) + " (clockwise)")
 	
-	var kvl = kvl_equations()
-	steps.append(create_step(
-		"Step 3: Write KVL Equations for Each Mesh",
-		"Apply Kirchhoff's Voltage Law around each mesh",
-		kvl.description,
-		kvl.equations_text
-	))
+	add_step("Step 3: Write KVL Equations for Each Mesh", "Apply Kirchhoff's Voltage Law around each mesh")
+	kvl_equations()
 	
+	add_step("Step 4: Form Matrix Equation [R][I] = [V]", "Organize equations into matrix form")
 	var mesh_matrix = build_mesh_matrix()
-	steps.append(create_step(
-		"Step 4: Form Matrix Equation [R][I] = [V]",
-		"Organize equations into matrix form",
-		mesh_matrix.description,
-		mesh_matrix.matrix_display
-	))
+	add_step_result(mesh_matrix["description"])
+	add_step_result("\nMatrix Form:")
+	add_step_result(mesh_matrix["matrix_display"])
 	
+	add_step("Step 5: Solve for Mesh Currents", "Use linear algebra to find all mesh currents")
 	var solution = solve_mesh_system(mesh_matrix)
-	steps.append(create_step(
-		"Step 5: Solve for Mesh Currents",
-		"Use linear algebra to find all mesh currents",
-		solution.description,
-		solution.results_text
-	))
+	add_step_result(solution["description"])
 	
-	var branch_currents = calculate_branch_currents(solution.currents)
-	steps.append(create_step(
-		"Step 6: Determine Branch Currents",
-		"Calculate actual current through each component",
-		branch_currents.description,
-		""
-	))
+	add_step("Step 6: Determine Branch Currents", "Calculate actual current through each component")
+	var branch_currents = calculate_branch_currents(solution["currents"])
+	add_step_result(branch_currents["description"])
 	
+	add_step("Step 7: Calculate Component Voltages and Power", "Use Ohm's Law and branch currents")
 	var component_values = mesh_component_values(branch_currents)
-	steps.append(create_step(
-		"Step 7: Calculate Component Voltages and Power",
-		"Use Ohm's Law and branch currents",
-		component_values.description,
-		""
-	))
+	add_step_result(component_values["description"])
 	
+	add_step("Step 8: Verify Solution", "Check KVL for each mesh")
 	var verification = verify_mesh_solution(component_values)
-	steps.append(create_step(
-		"Step 8: Verify Solution",
-		"Check KVL for each mesh",
-		verification.description,
-		""
-	))
+	add_step_result(verification["description"])
 	
-	display_mesh_steps(steps)
+	# Display solution window (matching nodal analysis)
+	var soln_window = preload("res://solution_window.tscn").instantiate()
+	add_child(soln_window)
+	soln_window.populate_solution_text(solution_steps)
+	
 	return solution
 
 func format_all_meshes():
@@ -104,13 +88,9 @@ func assign_mesh_currents():
 	}
 
 func kvl_equations():
-	var description = ""
-	var equations_text = ""
-	
 	for mesh_idx in range(loops.size()):
 		var loop = loops[mesh_idx]
-		description += "\nMesh " + str(mesh_idx + 1) + " KVL:\n"
-		equations_text += "\nMesh " + str(mesh_idx + 1) + ": "
+		add_step_result("\n--- Mesh " + str(mesh_idx + 1) + " KVL ---")
 		
 		var equation_parts = []
 		
@@ -122,22 +102,21 @@ func kvl_equations():
 				var direction = get_traversal_direction(comp_id, mesh_idx)
 				
 				if direction > 0:
-					description += "  Voltage source " + comp_id + " = +" + str(V) + " V (traverse with polarity)\n"
+					add_step_result("  Voltage source " + comp_id + " = +" + str(V) + "V (traverse with polarity)")
 					equation_parts.append("+" + str(V))
 				else:
-					description += "  Voltage source " + comp_id + " = -" + str(V) + " V (traverse against polarity)\n"
+					add_step_result("  Voltage source " + comp_id + " = -" + str(V) + "V (traverse against polarity)")
 					equation_parts.append("-" + str(V))
 			
 			elif comp.component_type == "resistor":
 				var R = comp.get_value()
-				
 				var shared_meshes = meshes_containing_component(comp_id)
 				
 				if shared_meshes.size() == 1:
-					description += "  Resistor " + comp_id + ": -I" + str(mesh_idx + 1) + " × " + str(R) + " Ω\n"
+					add_step_result("  Resistor " + comp_id + ": -I" + str(mesh_idx + 1) + " × " + str(R) + "Ω")
 					equation_parts.append("-I" + str(mesh_idx + 1) + "×" + str(R))
 				else:
-					description += "  Resistor " + comp_id + " (shared): "
+					var resistor_desc = "  Resistor " + comp_id + " (shared): -I" + str(mesh_idx + 1) + " × " + str(R) + "Ω"
 					var resistor_term = "-I" + str(mesh_idx + 1) + "×" + str(R)
 					
 					for other_mesh in shared_meshes:
@@ -147,26 +126,69 @@ func kvl_equations():
 							##If they flow in same direction currents add, so voltage is subtracted. If direction is opposite then visa versa
 							if direction > 0:
 								resistor_term += " - I" + str(other_mesh + 1) + "×" + str(R)
-								description += " -I" + str(other_mesh + 1)
+								resistor_desc += " - I" + str(other_mesh + 1) + " × " + str(R) + "Ω"
 							else:
 								resistor_term += " + I" + str(other_mesh + 1) + "×" + str(R)
-								description += " +I" + str(other_mesh + 1)
+								resistor_desc += " + I" + str(other_mesh + 1) + " × " + str(R) + "Ω"
 					
-					description += "\n"
+					add_step_result(resistor_desc)
 					equation_parts.append(resistor_term)
 			
 			##I havent fully tested a current source with mesh loop analysis
 			elif comp.component_type == "current_source":
 				var I_src = comp.get_value()
-				description += "  Current source " + comp_id + " = " + str(I_src) + " A\n"
+				add_step_result("  Current source " + comp_id + " = " + str(I_src) + "A")
 				equation_parts.append("(constrained by " + comp_id + ")")
 		
-		equations_text += " ".join(equation_parts) + " = 0\n"
+		var equation = " ".join(equation_parts) + " = 0"
+		add_step_result("\nEquation " + str(mesh_idx + 1) + ":")
+		add_step_equation(equation)
+	var description = ""
+	var equations = []
+	
+	for mesh_idx in range(loops.size()):
+		var loop = loops[mesh_idx]
+		var equation_parts = []
+		
+		for comp_id in loop:
+			var comp = Graph.components[comp_id]
+			
+			if comp.component_type == "voltage_source":
+				var V = comp.get_value()
+				var direction = get_traversal_direction(comp_id, mesh_idx)
+				
+				if direction > 0:
+					equation_parts.append("+" + str(V))
+				else:
+					equation_parts.append("-" + str(V))
+			
+			elif comp.component_type == "resistor":
+				var R = comp.get_value()
+				var shared_meshes = meshes_containing_component(comp_id)
+				
+				if shared_meshes.size() == 1:
+					equation_parts.append("-I" + str(mesh_idx + 1) + "×" + str(R))
+				else:
+					var resistor_term = "-I" + str(mesh_idx + 1) + "×" + str(R)
+					
+					for other_mesh in shared_meshes:
+						if other_mesh != mesh_idx:
+							var direction = get_current_direction(comp_id, mesh_idx, other_mesh)
+							if direction > 0:
+								resistor_term += " - I" + str(other_mesh + 1) + "×" + str(R)
+							else:
+								resistor_term += " + I" + str(other_mesh + 1) + "×" + str(R)
+					
+					equation_parts.append(resistor_term)
+		
+		var equation = " ".join(equation_parts) + " = 0"
+		equations.append(equation)
 	
 	return {
 		"description": description,
-		"equations_text": equations_text
+		"equations": equations
 	}
+
 
 func meshes_containing_component(comp_id):
 	var meshes = []
@@ -520,7 +542,7 @@ func display_mesh_steps(steps):
 			print("\n" + step.equation)
 
 
-func _on_button_3_pressed():
+func run():
 	loops = $"../Loop Detection".detect_loops()
 	solve_mesh_analysis()
 	analyze_voltage_source_directions()

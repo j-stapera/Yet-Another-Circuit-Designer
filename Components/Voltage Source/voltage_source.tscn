@@ -14,7 +14,7 @@ font = ExtResource("4_vfi0p")
 font_size = 550
 
 [node name="VoltageSource" type="Node2D"]
-scale = Vector2(0.05, 0.05)
+scale = Vector2(0.075, 0.075)
 script = ExtResource("1_14h41")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -23,10 +23,10 @@ texture = ExtResource("1_wigc2")
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -600.0
-offset_top = -560.0
-offset_right = -560.0
-offset_bottom = -520.0
+offset_left = -600.00006
+offset_top = -546.6667
+offset_right = -560.00006
+offset_bottom = -506.6667
 scale = Vector2(30.613209, 26.564402)
 
 [node name="Start" type="Area2D" parent="."]
@@ -45,6 +45,7 @@ scale = Vector2(-1.6967326, -1.6967326)
 texture = ExtResource("3_e6oro")
 
 [node name="End" type="Area2D" parent="."]
+position = Vector2(0, 26.666666)
 
 [node name="EndPos" type="CollisionShape2D" parent="End"]
 unique_name_in_owner = true
@@ -71,6 +72,7 @@ label_settings = SubResource("LabelSettings_vfi0p")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="gui_input" from="Container" to="." method="_on_container_gui_input"]
 [connection signal="mouse_entered" from="Container" to="." method="_on_container_mouse_entered"]
 [connection signal="mouse_exited" from="Container" to="." method="_on_container_mouse_exited"]
 [connection signal="area_entered" from="Start" to="." method="_on_start_area_entered"]

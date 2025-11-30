@@ -1,30 +1,66 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5guqm1eybxig"]
+[gd_scene load_steps=10 format=3 uid="uid://c5guqm1eybxig"]
 
 [ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main.gd" id="1_hru16"]
 [ext_resource type="PackedScene" uid="uid://cjto5eyl021c" path="res://gui_components/components_selector.tscn" id="2_txhx8"]
 [ext_resource type="PackedScene" uid="uid://uo4go1gio6sk" path="res://gui_components/copy-paste_panel.tscn" id="3_e8s8u"]
+[ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://graph.gd" id="4_e8s8u"]
+[ext_resource type="Script" uid="uid://cr2hvxlsuuapi" path="res://solver.gd" id="6_34iq7"]
+[ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://loop_detection.gd" id="7_bcysr"]
 [ext_resource type="Script" uid="uid://dqqaaseor1laa" path="res://connection_graph.gd" id="7_jjedt"]
+[ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://mesh_loop.gd" id="8_467os"]
+
+[sub_resource type="Theme" id="Theme_34iq7"]
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_hru16")
 
-[node name="FoldableContainer" parent="." instance=ExtResource("2_txhx8")]
-
-[node name="Panel" parent="." instance=ExtResource("3_e8s8u")]
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(639, 359)
 
 [node name="WireMode" type="Node2D" parent="."]
-
-[node name="Graph" type="Node2D" parent="."]
 
 [node name="ConnectionGraph" type="Node" parent="."]
 script = ExtResource("7_jjedt")
 
-[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Resistor" to="." method="_on_button_resistor_pressed"]
-[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Voltage Source" to="." method="_on_button_voltage_source_pressed"]
-[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Wire" to="." method="_on_button_wire_pressed"]
-[connection signal="pressed" from="FoldableContainer/MarginContainer/VBoxContainer/Button Current Source" to="." method="_on_button_current_source_pressed"]
-[connection signal="child_entered_tree" from="Graph" to="." method="_on_graph_child_entered_tree"]
-[connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
+[node name="Graph" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_e8s8u")
 
-[editable path="FoldableContainer"]
-[editable path="Panel"]
+[node name="Solver" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_34iq7")
+
+[node name="Loop Detection" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_bcysr")
+
+[node name="Mesh Loop" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_467os")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" parent="CanvasLayer" instance=ExtResource("3_e8s8u")]
+size_flags_horizontal = 8
+
+[node name="FoldableContainer" parent="CanvasLayer" instance=ExtResource("2_txhx8")]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 128.0
+offset_bottom = 466.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = SubResource("Theme_34iq7")
+
+[connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
+[connection signal="pressed" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/Check Button" to="Graph" method="_on_check_button_pressed"]
+[connection signal="gui_input" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Resistor" to="." method="_on_button_resistor_pressed"]
+[connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Voltage Source" to="." method="_on_button_voltage_source_pressed"]
+[connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Wire" to="." method="_on_button_wire_pressed"]
+[connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Current Source" to="." method="_on_button_current_source_pressed"]
+
+[editable path="CanvasLayer/Panel"]
+[editable path="CanvasLayer/FoldableContainer"]

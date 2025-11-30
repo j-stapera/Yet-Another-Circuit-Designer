@@ -1,13 +1,14 @@
 class_name CurrentSource
 extends Component
 
-var current = 1.0  # Amperes
+
 static var counter = 0
 
 func _ready():
 	component_type = "current_source"
 	id = get_prefix() + str(counter)
 	counter += 1
+	current = 1
 	
 	# Set up UI
 	label = $LineEdit
