@@ -154,9 +154,6 @@ func validate_circuit():
 	return {"valid": true, "error": ""}
 
 func get_component_instance(component_id):
-	# Return the actual visual instance of the component
-	# Assuming you store them somewhere accessible
-	# This could be in a dictionary, or as children of a container node
 	if has_node(component_id):
 		return get_node(component_id)
 	return null

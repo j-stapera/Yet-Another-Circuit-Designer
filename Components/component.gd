@@ -1,7 +1,6 @@
 class_name Component
 extends Node2D
 
-
 var id: String
 var component_type: String 
 var hover = false

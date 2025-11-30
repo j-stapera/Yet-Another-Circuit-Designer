@@ -91,13 +91,11 @@ func snap_to_grid_component(pos):
 			round(pos.y / Global.grid_size) * Global.grid_size
 		)
 func _process(_delta):
-
+	ui_movement()
 	if element_selected and placeable:
 		holo_node.position = snap_to_grid_component(get_global_mouse_position())
 		handle_element()
-	ui_movement()
 	
-
 	
 	if Input.is_action_just_pressed("Cancel"):
 		cancel_selection()
@@ -188,10 +186,6 @@ func _on_port_clicked(component_id, port_name, port_position):
 		end = { "id": component_id, "port": port_name }
 		end_position = port_position
 		
-		# Don't add the snapped grid point, use the actual port position
-		# wire_points.append(end_position)
-		
-		# Finalize the wire
 		wire_instance.clear_wire()
 		
 		# Draw all intermediate segments
@@ -216,8 +210,8 @@ func _on_port_clicked(component_id, port_name, port_position):
 			wire_instance.add_point(end_position)
 		
 		wire_instance.finalize_wire()
+		wire_instance.add_connection(start, end)
 		
-		# Reset state
 		Global.placing_wire = false
 		wire_points.clear()
 		

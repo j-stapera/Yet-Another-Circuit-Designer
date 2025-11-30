@@ -52,6 +52,12 @@ func run():
 	add_step("Step 5: Solutions")
 	
 	display_results(solution, node_indices, ground_node)
+	
+	var debug = Graph.nodes.values()
+	
+	print(debug)
+	highlight_wire_nodes()
+	
 
 func populate_matrices(A, B, node_indices, ground_node):
 	var vs_counter = 0
@@ -167,7 +173,7 @@ func build_symbolic_equations(node_indices, ground_node):
 	
 	# KCL equations for each node
 	for node_name in node_indices.keys():
-		var eq_str = build_kcl_equations(node_name, ground_node)
+		var eq_str = kcl_equations(node_name, ground_node)
 		equations.append(eq_str)
 		add_step_result("Equation " + str(equation_number) + ": " + eq_str)
 		equation_number += 1
@@ -184,7 +190,7 @@ func build_symbolic_equations(node_indices, ground_node):
 			vs_counter += 1
 
 
-func build_kcl_equations(node_name, ground_node):
+func kcl_equations(node_name, ground_node):
 	var terms = []
 	for component_id in Graph.components.keys():
 		var component = Graph.components[component_id]
@@ -472,6 +478,57 @@ func get_nodes_for_component(component_id):
 			connected_nodes.append(node_name)
 	
 	return connected_nodes
+
+var wire_nodes = {}
+
+func highlight_wire_nodes():
+	wire_nodes.clear()
+	for child in get_parent().get_children():
+		if child is Line2D:
+			print(child)
+			print("wire connections", child.component_list)
+			
+			for node_key in Graph.nodes.keys():
+				var node_connection = Graph.nodes[node_key]
+				print("Node connections", node_connection)
+				
+				if node_connection.has(child.component_list[0]) && node_connection.has(child.component_list[1]):
+					if not wire_nodes.has(node_key):
+						wire_nodes[node_key] = []
+					wire_nodes[node_key].append(child)
+	print(wire_nodes)
+	var node_colors = {}
+	var color_index = 0
+
+	for node in wire_nodes.keys():
+	# Generate a distinct color for this node
+		if not node_colors.has(node):
+			node_colors[node] = generate_color(color_index)
+			color_index += 1
+	
+	# Apply the node's color to all its wires
+		for wire in wire_nodes.get(node):
+			wire.default_color = node_colors[node]
+	
+	# Add ONE label for this node on the first wire
+		if wire_nodes[node].size() > 0:
+			var first_wire = wire_nodes[node][0]
+			var label = Label.new()
+			label.text = node
+			label.add_theme_color_override("font_color", node_colors[node])
+		
+			# Position the label near the midpoint of the wire
+			if first_wire.points.size() > 0:
+				var midpoint = first_wire.points[first_wire.points.size() / 2]
+				label.position = midpoint + Vector2(20, -20)  # Increased offset
+		
+		# Add label to the scene
+			first_wire.add_child(label)
+# Helper function to generate distinct colors using HSV
+func generate_color(index: int) -> Color:
+	var hue = float(index) * 0.618033988749895  # Golden ratio conjugate
+	hue = fmod(hue, 1.0)
+	return Color.from_hsv(hue, 0.8, 0.9)
 
 func calculate_resistor_values(component, solution, node_indices, ground_node):
 	var R = component.get_value()

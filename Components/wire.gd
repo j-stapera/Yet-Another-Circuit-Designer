@@ -3,6 +3,7 @@ extends Line2D
 const GRID_SIZE = 32  # Adjust to your grid size
 
 var points_list = []
+var component_list = []
 
 func draw_wire_segment(start: Vector2, end: Vector2):
 	add_point(start)
@@ -17,3 +18,8 @@ func clear_wire():
 func finalize_wire():
 	default_color = Color.BLACK
 	width = 3
+
+func add_connection(start, end):
+	component_list.append(start["id"] + "_" + start["port"])
+	component_list.append(end["id"] + "_" + end["port"])
+	component_list.sort()
