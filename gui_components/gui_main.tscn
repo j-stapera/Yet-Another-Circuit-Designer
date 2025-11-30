@@ -54,6 +54,9 @@ script = ExtResource("8_j4ngi")
 z_index = 1
 size_flags_horizontal = 8
 
+[node name="ThemeToggle" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer" index="6"]
+text = "Graphic Designer Mode"
+
 [node name="FoldableContainer" parent="CanvasLayer" instance=ExtResource("2_txhx8")]
 z_index = 1
 offset_left = 0.0
