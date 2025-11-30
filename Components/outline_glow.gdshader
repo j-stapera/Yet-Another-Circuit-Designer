@@ -1,3 +1,4 @@
+//https://godotshaders.com/shader/edge-gradient-border-shader/
 shader_type canvas_item;
 
 uniform vec4 line_colour : source_color = vec4(0.26785484, 0.8365346, 0.8269338, 1); // default = white

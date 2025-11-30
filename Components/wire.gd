@@ -16,4 +16,4 @@ func clear_wire():
 
 func finalize_wire():
 	default_color = Color.WHITE
-	width = 3
+	width = 4
