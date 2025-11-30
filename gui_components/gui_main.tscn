@@ -41,6 +41,7 @@ unique_name_in_owner = true
 script = ExtResource("8_467os")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
 
 [node name="Background" type="Sprite2D" parent="CanvasLayer"]
 visible = false
@@ -50,9 +51,11 @@ texture = ExtResource("7_467os")
 script = ExtResource("8_j4ngi")
 
 [node name="Panel" parent="CanvasLayer" instance=ExtResource("3_e8s8u")]
+z_index = 1
 size_flags_horizontal = 8
 
 [node name="FoldableContainer" parent="CanvasLayer" instance=ExtResource("2_txhx8")]
+z_index = 1
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 128.0
