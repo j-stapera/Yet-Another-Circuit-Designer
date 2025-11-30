@@ -124,6 +124,14 @@ popup/item_0/id = 0
 popup/item_1/text = "Mesh Loop"
 popup/item_1/id = 1
 
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Engineer UI"
+
+[node name="ThemeToggle" type="CheckButton" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Check Button" to="." method="_on_check_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Simplify Button" to="." method="_on_simplify_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Solve" to="." method="_on_solve_pressed"]
