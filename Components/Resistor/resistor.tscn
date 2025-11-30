@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://bfpiupp15il6d"]
+[gd_scene load_steps=10 format=3 uid="uid://bfpiupp15il6d"]
 
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_anlt7"]
 [ext_resource type="Script" uid="uid://uwjdn8ciimkh" path="res://Components/Resistor/resistor.gd" id="1_j3p18"]
 [ext_resource type="Texture2D" uid="uid://wd0s0yii56ma" path="res://misc/bubble.png" id="3_iwnpr"]
 [ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="3_msrb1"]
 [ext_resource type="Script" uid="uid://cmnnlrc586hgi" path="res://Components/Resistor/text.gd" id="4_bke0b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bke0b"]
 
 [sub_resource type="Theme" id="Theme_iwnpr"]
 
@@ -20,6 +22,7 @@ scale = Vector2(0.086, 0.086)
 script = ExtResource("1_j3p18")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_bke0b")
 position = Vector2(2.8140259, -4.651136)
 texture = ExtResource("1_anlt7")
 

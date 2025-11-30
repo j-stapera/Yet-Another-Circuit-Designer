@@ -1,13 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjto5eyl021c"]
+[gd_scene load_steps=13 format=3 uid="uid://cjto5eyl021c"]
 
 [ext_resource type="Script" uid="uid://c8u1r6xsyy822" path="res://gui_components/components_selector.gd" id="1_k48y5"]
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_tnxru"]
 [ext_resource type="Texture2D" uid="uid://dlp8dpyy38cpp" path="res://Components/Capacitor/capacitor.png" id="2_6ojnw"]
-[ext_resource type="Script" uid="uid://6b6mchks0nk1" path="res://gui_components/v_box_container.gd" id="2_tq1kt"]
+[ext_resource type="Script" path="res://gui_components/v_box_container.gd" id="2_tq1kt"]
 [ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="3_xdpdu"]
 [ext_resource type="Texture2D" uid="uid://j4626myjd2u7" path="res://Components/Inductor/inductor.png" id="4_k48y5"]
 [ext_resource type="Texture2D" uid="uid://bjourckn1ul6j" path="res://Components/wire.png" id="4_xdpdu"]
 [ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="5_6ojnw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tq1kt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
 
@@ -23,12 +25,13 @@ expand_margin_left = 4.0
 expand_margin_right = 4.0
 
 [node name="FoldableContainer" type="FoldableContainer"]
+material = SubResource("ShaderMaterial_tq1kt")
 offset_left = 52.0
 offset_top = 23.0
 offset_right = 180.0
 offset_bottom = 489.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_7mycd")
-title = "Tools"
+title = "                 "
 script = ExtResource("1_k48y5")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
