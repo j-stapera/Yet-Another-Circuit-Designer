@@ -82,116 +82,144 @@ func add_step_result(text):
 
 
 func display_results(solution, node_indices, ground_node):
-	add_step_result("\nNode Voltages:")
-	add_step_result(ground_node + " = 0.000V (Ground)")
+	var description = ""
+	
+	description += "\nNode Voltages:\n"
+	description += ground_node + " = 0.000V (Ground)\n"
 	
 	for node_name in node_indices.keys():
 		var index = node_indices[node_name]
 		var voltage = solution[index]
-		add_step_result(node_name + " = " + ("%.3f" % voltage) + "V")
+		description += node_name + " = " + ("%.3f" % voltage) + "V\n"
+	
+	description += "\n"
 	
 	var num_nodes = node_indices.size()
 	var vs_index = 0
+	var has_voltage_sources = false
 	
-	add_step_result("\nVoltage Source Currents:")
 	for component_id in Graph.components.keys():
 		var component = Graph.components[component_id]
 		if component.component_type == "voltage_source":
-			var current = solution[num_nodes + vs_index]
-			add_step_result(component_id + " = " + ("%.3f" % current) + "A")
-			vs_index += 1
+			has_voltage_sources = true
+			break
 	
-	add_step_result("\nBranch Currents and Power:")
+	if has_voltage_sources:
+		description += "Voltage Source Currents:\n"
+		
+		vs_index = 0
+		for component_id in Graph.components.keys():
+			var component = Graph.components[component_id]
+			if component.component_type == "voltage_source":
+				var current = solution[num_nodes + vs_index]
+				description += component_id + " = " + ("%.3f" % current) + "A\n"
+				vs_index += 1
+		
+		description += "\n"
+	
+	description += "Component voltages and power:\n\n"
+	
 	for component_id in Graph.components.keys():
 		var component = Graph.components[component_id]
 		if component.component_type == "resistor":
 			var info = calculate_resistor_values(component, solution, node_indices, ground_node)
 			component.set_current(info.current)
-			add_step_result(component_id + " (" + str(info.resistance) + "Ω): V=" + ("%.3f" % info.voltage) + "V, I=" + ("%.3f" % info.current) + "A, P=" + ("%.3f" % info.power) + "W")
+			
+			description += component_id + " (" + str(info.resistance) + " Ω):\n"
+			description += "  V = |I| × R = " + ("%.6f" % info.current) + " × " + str(info.resistance) + " = " + ("%.3f" % info.voltage) + " V\n"
+			description += "  I = " + ("%.6f" % info.current) + " A\n"
+			description += "  P = I² × R = " + ("%.3f" % info.power) + " W\n\n"
 	
-	var soln_window = preload("res://solution_window.tscn").instantiate()
+	vs_index = 0
+	for component_id in Graph.components.keys():
+		var component = Graph.components[component_id]
+		if component.component_type == "voltage_source":
+			var V = component.get_value()
+			var current = solution[num_nodes + vs_index]
+			var P = abs(V * current)
+			
+			description += component_id + " (" + str(V) + " V):\n"
+			description += "  V = " + str(V) + " V (source)\n"
+			description += "  I = " + ("%.6f" % abs(current)) + " A\n"
+			description += "  P = " + ("%.3f" % P) + " W\n\n"
+			vs_index += 1
+	
+	for component_id in Graph.components.keys():
+		var component = Graph.components[component_id]
+		if component.component_type == "current_source":
+			var I = component.get_value()
+			var current_info = calculate_current_source_voltage(component, solution, node_indices, ground_node)
+			
+			description += component_id + " (" + str(I) + " A):\n"
+			description += "  V = " + ("%.3f" % current_info.voltage) + " V\n"
+			description += "  I = " + str(I) + " A (source)\n"
+			description += "  P = " + ("%.3f" % current_info.power) + " W\n\n"
+	
+	add_step_result(description)
+	
+	var soln_window = preload("res://popup_windows/solution_window.tscn").instantiate()
 	add_child(soln_window)
 	soln_window.populate_solution_text(solution_steps)
 
 
 func display_system_of_equations():
-	add_step_result("\nSystem of " + str(equations.size()) + " equations with " + str(variables.size()) + " unknowns:\n")
+	var description = "\nSystem of " + str(equations.size()) + " equations with " + str(variables.size()) + " unknowns:\n\n"
 	
 	for i in range(equations.size()):
-		add_step_result("  (" + str(i + 1) + ")  " + equations[i])
+		description += "  (" + str(i + 1) + ")  " + equations[i] + "\n"
 	
-	add_step_result("")
-
-
-#func kcl_equations(node_indices, ground_node):
-	#var equations = []
-	#
-	#for node_name in node_indices.keys():
-		#var eq_parts = []
-		#var components_at_node = get_nodes_for_component(node_name)
-		#
-		#for comp_info in components_at_node:
-			#var component = comp_info.component
-			#var is_positive_terminal = comp_info.is_positive
-			#
-			#if component.component_type == "resistor":
-				#var other_node = comp_info.other_node
-				#var R = component.get_value()
-				#
-				#if is_positive_terminal:
-					#if other_node == ground_node:
-						#eq_parts.append("V" + node_name + "/" + str(R))
-					#else:
-						#eq_parts.append("(V" + node_name + " - V" + other_node + ")/" + str(R))
-				#else:
-					#if other_node == ground_node:
-						#eq_parts.append("-V" + node_name + "/" + str(R))
-					#else:
-						#eq_parts.append("(V" + other_node + " - V" + node_name + ")/" + str(R))
-			#
-			#elif component.component_type == "current_source":
-				#var I = component.get_value()
-				#if is_positive_terminal:
-					#eq_parts.append(str(I))
-				#else:
-					#eq_parts.append("-" + str(I))
-			#
-			#elif component.component_type == "voltage_source":
-				#var vs_index = "V" + component.id
-				#if is_positive_terminal:
-					#eq_parts.append("I_vs" + str(vs_index))
-				#else:
-					#eq_parts.append("-I_vs" + str(vs_index))
-		#
-		#var equation = "Node " + node_name + ": " + " + ".join(eq_parts) + " = 0"
-		#equations.append(equation)
-	#
-	#return equations
+	description += "\n"
+	
+	add_step_result(description)
 
 func build_symbolic_equations(node_indices, ground_node):
 	var equation_number = 1
+	var description = ""
+	
+	description += "\nKCL Equations (node-by-node):\n\n"
 	
 	# KCL equations for each node
 	for node_name in node_indices.keys():
-		var eq_str = kcl_equations(node_name, ground_node)
+		description += "Node " + node_name + ":\n"
+		var eq_components = kcl_equations(node_name, ground_node)
+		
+		# Show the detailed breakdown
+		description += "  Currents leaving node " + node_name + ":\n"
+		for term_desc in eq_components["term_descriptions"]:
+			description += "    " + term_desc + "\n"
+		
+		# Show the final equation
+		var eq_str = eq_components["equation"]
 		equations.append(eq_str)
-		add_step_result("Equation " + str(equation_number) + ": " + eq_str)
+		description += "  Equation " + str(equation_number) + ": " + eq_str + "\n"
 		equation_number += 1
+	
+	description += "\nVoltage Source Constraint Equations:\n\n"
 	
 	# Voltage source constraint equations
 	var vs_counter = 1
 	for component_id in Graph.components.keys():
 		var component = Graph.components[component_id]
 		if component.component_type == "voltage_source":
-			var eq_str = build_voltage_source_equations(component_id, ground_node, vs_counter)
+			var eq_details = build_voltage_source_equations(component_id, ground_node, vs_counter)
+			
+			description += component_id + " (" + str(component.get_value()) + " V):\n"
+			description += "  " + eq_details["description"] + "\n"
+			
+			var eq_str = eq_details["equation"]
 			equations.append(eq_str)
-			add_step_result("Equation " + str(equation_number) + ": " + eq_str)
+			description += "  Equation " + str(equation_number) + ": " + eq_str + "\n"
 			equation_number += 1
 			vs_counter += 1
+	
+	add_step_result(description)
+	
 
 
 func kcl_equations(node_name, ground_node):
 	var terms = []
+	var term_descriptions = []
+	
 	for component_id in Graph.components.keys():
 		var component = Graph.components[component_id]
 		var nodes = get_nodes_for_component(component_id)
@@ -208,32 +236,52 @@ func kcl_equations(node_name, ground_node):
 			var R = component.get_value()
 			var other_node = node2 if connected_at_start else node1
 			var term = ""
+			var description = ""
+			
 			if other_node == ground_node:
 				term = "V" + node_name + "/" + str(R)
+				description = component_id + ": (V" + node_name + " - 0) / " + str(R) + " Ω"
 			else:
 				term = "(V" + node_name + " - V" + other_node + ")/" + str(R)
+				description = component_id + ": (V" + node_name + " - V" + other_node + ") / " + str(R) + " Ω"
+			
 			terms.append(term)
+			term_descriptions.append(description)
 		
 		elif component.component_type == "current_source":
 			var I = component.get_value()
+			var description = component_id + ": "
+			
 			if connected_at_start:
 				terms.append(str(I))
+				description += str(I) + " A (leaving node)"
 			else:
 				terms.append(str(-I))
+				description += str(-I) + " A (entering node)"
+			
+			term_descriptions.append(description)
 		
 		elif component.component_type == "voltage_source":
 			var vs_index = get_voltage_source_index(component_id)
 			var I_name = "I" + str(vs_index + 1)
+			var description = component_id + ": "
+			
 			if connected_at_start:
 				terms.append(I_name)
+				description += I_name + " (current leaving node)"
 			else:
 				terms.append("-" + I_name)
+				description += "-" + I_name + " (current entering node)"
+			
+			term_descriptions.append(description)
 	
 	var equation = " + ".join(terms) + " = 0"
 	equation = equation.replace(" + -", " - ")
 	
-	return equation
-
+	return {
+		"equation": equation,
+		"term_descriptions": term_descriptions
+	}
 
 
 func build_voltage_source_equations(component_id, ground_node, vs_number):
@@ -244,6 +292,7 @@ func build_voltage_source_equations(component_id, ground_node, vs_number):
 	var pos_node = nodes[1]
 	
 	var left_side = ""
+	var description = "Voltage from " + neg_node + " (−) to " + pos_node + " (+) must equal " + str(V) + " V"
 	
 	if pos_node == ground_node:
 		left_side = "0"
@@ -261,7 +310,10 @@ func build_voltage_source_equations(component_id, ground_node, vs_number):
 	if left_side == "0 - ":
 		left_side = "-"
 	
-	return left_side + " = " + str(V)
+	return {
+		"equation": left_side + " = " + str(V),
+		"description": description
+	}
 
 
 func solve_linear_system(A, B):
@@ -517,7 +569,7 @@ func highlight_wire_nodes():
 			if first_wire.points.size() > 0:
 				var midpoint = first_wire.points[first_wire.points.size() / 2]
 				label.position = midpoint + Vector2(20, -20)  
-		
+				
 			first_wire.add_child(label)
 
 func generate_color(index: int) -> Color:

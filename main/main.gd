@@ -23,13 +23,15 @@ var voltageSource_scn = preload("res://Components/Voltage Source/voltage_source.
 var voltageSource_holoscn = preload("res://Components/Voltage Source/vs_holo.tscn")
 var currentSource_scn = preload("res://Components/Current Source/current_source.tscn")
 var currentSource_holoscn = preload("res://Components/Current Source/current_holo.tscn")
-var wire_scn = preload("res://Components/wire.tscn")
+var wire_scn = preload("res://Components/Wire/wire.tscn")
 var element_rotation
 var current_holo_scene = null
 @onready var connectiongraph = get_node("ConnectionGraph")
 
 ## Need to expand the container and create a function to limit placing components when the mouse enters the container ***
 var placeable = true
+
+
 
 ## Button presses for each component will follow the same structure
 func _on_button_resistor_pressed():
@@ -99,7 +101,10 @@ func _process(_delta):
 		var mouse_pos = get_global_mouse_position()
 		var snapped_pos = snap_to_grid(mouse_pos)
 		update_wire_preview(snapped_pos)
-		
+	
+	if Input.is_action_just_pressed("Reset"):
+		get_tree().reload_current_scene()
+	
 
 ## All actions while an component is currently selected
 func handle_element():

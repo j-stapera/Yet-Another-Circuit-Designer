@@ -5,11 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://j4626myjd2u7" path="res://Components/Inductor/inductor.png" id="3_3i5n8"]
 [ext_resource type="Texture2D" uid="uid://bans8qfumlg7f" path="res://Components/Voltage Source/voltage source.png" id="4_iedb8"]
 [ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="5_8mcut"]
-[ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://graph.gd" id="6_sstwu"]
+[ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://Solving Mechanisms/graph.gd" id="6_sstwu"]
 [ext_resource type="Script" uid="uid://dqqaaseor1laa" path="res://connection_graph.gd" id="7_ofl1q"]
-[ext_resource type="Script" uid="uid://cr2hvxlsuuapi" path="res://solver.gd" id="8_vh6wt"]
-[ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://loop_detection.gd" id="9_x3243"]
-[ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://mesh_loop.gd" id="10_n2676"]
+[ext_resource type="Script" uid="uid://cr2hvxlsuuapi" path="res://Solving Mechanisms/solver.gd" id="8_vh6wt"]
+[ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://Solving Mechanisms/loop_detection.gd" id="9_x3243"]
+[ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://Solving Mechanisms/mesh_loop.gd" id="10_n2676"]
 
 [node name="old_main" type="Node2D"]
 

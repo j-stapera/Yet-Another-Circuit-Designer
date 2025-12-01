@@ -66,7 +66,7 @@ func solve_mesh_analysis():
 	add_step_result(verification["description"])
 	
 	# Display solution window (matching nodal analysis)
-	var soln_window = preload("res://solution_window.tscn").instantiate()
+	var soln_window = preload("res://popup_windows/solution_window.tscn").instantiate()
 	add_child(soln_window)
 	soln_window.populate_solution_text(solution_steps)
 	
@@ -365,7 +365,6 @@ func solve_mesh_system(mesh_matrix):
 	print("Input R matrix: ", R)
 	print("Input V vector: ", V)
 	
-	# Use the existing linear solver
 	var currents = solver.solve_linear_system(R, V)
 	
 	print("\nSOLVER RETURNED")

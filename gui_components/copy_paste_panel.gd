@@ -3,7 +3,7 @@ extends PanelContainer
 @onready var confirm_window_scene = preload("res://popup_windows/one_button_window.tscn")
 @onready var why_window_scene = preload("res://popup_windows/two_button_window.tscn")
 @onready var info_window_scene = preload("res://popup_windows/informational_window.tscn")
-@onready var solution_window_scene = preload("res://solution_window.tscn")
+@onready var solution_window_scene = preload("res://popup_windows/solution_window.tscn")
 
 
 func _on_simplify_button_pressed() -> void:

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjourckn1ul6j"
-path="res://.godot/imported/wire.png-23cb792d81a994e077a056098051a8df.ctex"
+path="res://.godot/imported/wire.png-2713b272dd925fb2be0a34ef5803a79b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Components/wire.png"
-dest_files=["res://.godot/imported/wire.png-23cb792d81a994e077a056098051a8df.ctex"]
+source_file="res://Components/Wire/wire.png"
+dest_files=["res://.godot/imported/wire.png-2713b272dd925fb2be0a34ef5803a79b.ctex"]
 
 [params]
 

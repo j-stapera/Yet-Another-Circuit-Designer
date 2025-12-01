@@ -14,6 +14,25 @@ func _ready():
 	label.text = str(voltage)
 	id_label.text = id
 
+func get_save_data():
+	return {
+		"type": component_type,
+		"id": id,
+		"position": {
+			"x": position.x,
+			"y": position.y
+		},
+		"rotation": rotation,
+		"current": current,
+		"value": voltage
+	}
+
+func load_save_data(data: Dictionary):
+	id = data["id"]
+	position = Vector2(data["position"]["x"], data["position"]["y"])
+	rotation = data.get("rotation", 0.0)
+	voltage = data.get("value")
+
 func get_value():
 	return voltage
 

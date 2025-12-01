@@ -15,6 +15,7 @@ const info_window = preload("res://popup_windows/informational_window.tscn")
 @onready var label: LineEdit
 @onready var id_label: Label
 
+
 func set_id():
 	pass
 
