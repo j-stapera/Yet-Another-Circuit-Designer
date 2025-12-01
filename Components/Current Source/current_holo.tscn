@@ -4,5 +4,5 @@
 
 [node name="current_holo" type="Sprite2D"]
 self_modulate = Color(1, 1, 1, 0.3647059)
-scale = Vector2(0.05, 0.05)
+scale = Vector2(0.076, 0.076)
 texture = ExtResource("1_i1aa1")

@@ -76,6 +76,8 @@ func snap_to_grid_component(pos):
 		should_be_vertical = is_rotated_90
 	elif current_holo_scene == voltageSource_holoscn:
 		should_be_vertical = !is_rotated_90
+	elif current_holo_scene == currentSource_holoscn:
+		should_be_vertical = !is_rotated_90
 	
 	if should_be_vertical:
 		return Vector2(

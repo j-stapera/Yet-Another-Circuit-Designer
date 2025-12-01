@@ -43,27 +43,27 @@ func solve_mesh_analysis():
 	add_step("Step 3: Write KVL Equations for Each Mesh", "Apply Kirchhoff's Voltage Law around each mesh")
 	kvl_equations()
 	
-	add_step("Step 4: Form Matrix Equation [R][I] = [V]", "Organize equations into matrix form")
+	#add_step("Step 4: Form Matrix Equation [R][I] = [V]", "Organize equations into matrix form")
 	var mesh_matrix = build_mesh_matrix()
-	add_step_result(mesh_matrix["description"])
-	add_step_result("\nMatrix Form:")
-	add_step_result(mesh_matrix["matrix_display"])
+	#add_step_result(mesh_matrix["description"])
+	#add_step_result("\nMatrix Form:")
+	#add_step_result(mesh_matrix["matrix_display"])
 	
-	add_step("Step 5: Solve for Mesh Currents", "Use linear algebra to find all mesh currents")
+	add_step("Step 4: Solve for Mesh Currents", "Use linear algebra to find all mesh currents")
 	var solution = solve_mesh_system(mesh_matrix)
 	add_step_result(solution["description"])
 	
-	add_step("Step 6: Determine Branch Currents", "Calculate actual current through each component")
+	add_step("Step 5: Determine Branch Currents", "Calculate actual current through each component")
 	var branch_currents = calculate_branch_currents(solution["currents"])
 	add_step_result(branch_currents["description"])
 	
-	add_step("Step 7: Calculate Component Voltages and Power", "Use Ohm's Law and branch currents")
+	add_step("Step 6: Calculate Component Voltages and Power", "Use Ohm's Law and branch currents")
 	var component_values = mesh_component_values(branch_currents)
 	add_step_result(component_values["description"])
 	
-	add_step("Step 8: Verify Solution", "Check KVL for each mesh")
-	var verification = verify_mesh_solution(component_values)
-	add_step_result(verification["description"])
+	#add_step("Step 8: Verify Solution", "Check KVL for each mesh")
+	#var verification = verify_mesh_solution(component_values)
+	#add_step_result(verification["description"])
 	
 	# Display solution window (matching nodal analysis)
 	var soln_window = preload("res://popup_windows/solution_window.tscn").instantiate()

@@ -40,7 +40,7 @@ func detect_loops():
 	print("\nDETECTED LOOPS")
 	for i in range(loops.size()):
 		print("Loop ", i + 1, ": ", format_loop(loops[i]))
-	
+	highlight_wires(loops, graph)
 	return loops
 
 func build_adjacency_graph():
@@ -185,6 +185,57 @@ func get_nodes_for_component(component_id):
 	
 	return connected_nodes
 
+var wire_loops = {}
+
+func highlight_wires(loops, graph):
+	for loop in loops:
+		var loop_index = loops.find(loop)
+
+		for child in get_parent().get_children():
+			if child is Line2D:
+				var comp_id = child.component_list[0].split("_")[0]
+
+				if loop.has(comp_id):
+					if not wire_loops.has(loop_index):
+						wire_loops[loop_index] = []
+					wire_loops[loop_index].append(child)
+
+					
+	var loop_colors = {}
+	var color_index = 0
+	var loop_counter = 1
+
+	for loop_index in wire_loops.keys():
+		var loop = loops[loop_index]
+
+		# Assign color if needed
+		if not loop_colors.has(loop_index):
+			loop_colors[loop_index] = generate_color(color_index)
+			color_index += 1
+
+		# Color all wires in the loop
+		for wire in wire_loops[loop_index]:
+			wire.default_color = loop_colors[loop_index]
+			
+		# Add label
+		if wire_loops[loop_index].size() > 0:
+			var first_wire = wire_loops[loop_index][0]
+			var label = Label.new()
+			print("CURRENT LOOP INDEX: ", loop_index)
+			label.text = str(loop_counter)
+			loop_counter += 1
+			label.add_theme_color_override("font_color", loop_colors[loop_index])
+
+			if first_wire.points.size() > 0:
+				var midpoint = first_wire.points[first_wire.points.size() / 2]
+				label.position = midpoint + Vector2(20, -20)
+
+			first_wire.add_child(label)
+					
+func generate_color(index: int) -> Color:
+	var hue = float(index) * 0.618033988749895
+	hue = fmod(hue, 1.0)
+	return Color.from_hsv(hue, 0.8, 0.9)
 var detected_loops = []
 
 func _on_button_2_pressed():

@@ -48,3 +48,7 @@ func get_prefix() -> String:
 func _on_line_edit_text_submitted(new_text):
 	var v = new_text.to_float()
 	set_value(v)
+
+func _input(event):
+	if event.is_action_pressed("Reset"):
+		counter = 0

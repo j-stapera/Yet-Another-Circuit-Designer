@@ -15,6 +15,8 @@ script = ExtResource("1_rcq84")
 oversampling_override = 1.0
 initial_position = 1
 size = Vector2i(400, 100)
+transient = true
+exclusive = true
 
 [node name="LineEdit" type="LineEdit" parent="Window"]
 anchors_preset = 8

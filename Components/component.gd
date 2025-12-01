@@ -93,16 +93,26 @@ func display_info():
 	var value_text = info_instance.find_child("Value")
 	var current_text = info_instance.find_child("LineEdit")
 	
+	# Debug prints
+	print("id_text found: ", id_text != null)
+	print("value_text found: ", value_text != null)
+	print("current_text found: ", current_text != null)
+	
+	if current_text == null:
+		push_error("LineEdit not found! Check node names in info_window scene")
+		return
+	
 	id_text.text = "Name: " + id
 	
 	if get_prefix() == "R":
 		value_text.text = "Resistance: " + str(get_value())
 		current_text.text = "%.4f" % get_current()
 			
-			
 	if get_prefix() == "V":
 		value_text.text = "Voltage: " + str(get_value())
-	current_text.text_submitted.connect(_on_text_submitted)
+	
+	if not current_text.text_submitted.is_connected(_on_text_submitted):
+		current_text.text_submitted.connect(_on_text_submitted)
 	
 func _on_text_submitted(new_text):
 	set_current(int(new_text))
