@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bfmev7f2otv4c"]
+[gd_scene load_steps=3 format=3 uid="uid://bfmev7f2otv4c"]
 
 [ext_resource type="Script" uid="uid://ct1q2kmya3u03" path="res://Components/Wire/wire.gd" id="1_3ibav"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwrym"]
+
 [node name="Wire" type="Line2D"]
+material = SubResource("ShaderMaterial_qwrym")
 width = 2.8
-default_color = Color(0, 0, 0, 1)
 script = ExtResource("1_3ibav")

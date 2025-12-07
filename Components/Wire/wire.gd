@@ -38,8 +38,8 @@ func load_save_data(data, graph):
 	var end = {"id": part2[0], "port": part2[1]}
 	
 	graph.add_connection(start, end)
-	default_color = Color.BLACK
-	width = 3
+	default_color = Color.WHITE
+	width = 4
 
 func draw_wire_segment(start: Vector2, end: Vector2):
 	add_point(start)
@@ -52,8 +52,8 @@ func clear_wire():
 	points_list.clear()
 
 func finalize_wire():
-	default_color = Color.BLACK
-	width = 3
+	default_color = Color.WHITE
+	width = 4
 
 func add_connection(start, end):
 	component_list.append(start["id"] + "_" + start["port"])
