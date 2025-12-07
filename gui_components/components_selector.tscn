@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjto5eyl021c"]
+[gd_scene load_steps=13 format=3 uid="uid://cjto5eyl021c"]
 
 [ext_resource type="Script" uid="uid://c8u1r6xsyy822" path="res://gui_components/components_selector.gd" id="1_k48y5"]
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_tnxru"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://j4626myjd2u7" path="res://Components/Inductor/inductor.png" id="4_k48y5"]
 [ext_resource type="Texture2D" uid="uid://bjourckn1ul6j" path="res://Components/Wire/wire.png" id="4_xdpdu"]
 [ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="5_6ojnw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tq1kt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
 
@@ -23,6 +25,7 @@ expand_margin_left = 4.0
 expand_margin_right = 4.0
 
 [node name="FoldableContainer" type="FoldableContainer"]
+material = SubResource("ShaderMaterial_tq1kt")
 offset_left = 52.0
 offset_top = 23.0
 offset_right = 180.0

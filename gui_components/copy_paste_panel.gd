@@ -4,7 +4,7 @@ extends PanelContainer
 @onready var why_window_scene = preload("res://popup_windows/two_button_window.tscn")
 @onready var info_window_scene = preload("res://popup_windows/informational_window.tscn")
 @onready var solution_window_scene = preload("res://popup_windows/solution_window.tscn")
-
+@onready var shader = preload("res://gui_components/glass-panels.gdshader")
 
 func _on_simplify_button_pressed() -> void:
 	# call simplify method
@@ -54,3 +54,11 @@ func _on_solve_pressed() -> void:
 
 func _on_save_button_pressed() -> void:
 	pass # Replace with function body.
+	
+func _on_theme_toggle_toggled(toggled_on: bool) -> void:
+	Global.currentTheme = toggled_on
+	Global.emit_signal("theme_change", toggled_on)
+	if(toggled_on == false):
+		get_material().shader = null
+	else:
+		get_material().shader = shader
