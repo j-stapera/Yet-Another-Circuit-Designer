@@ -12,7 +12,7 @@ func _on_simplify_button_pressed() -> void:
 	
 	var info_window = info_window_scene.instantiate()
 	get_tree().current_scene.add_child(info_window)
-	info_window.change_label("This is where the output\nof the circuit simplication would be.")
+	#info_window.change_label("This is where the output\nof the circuit simplication would be.")
 
 
 
@@ -50,10 +50,6 @@ func _on_solve_pressed() -> void:
 
 
 
-
-
-func _on_save_button_pressed() -> void:
-	pass # Replace with function body.
 	
 func _on_theme_toggle_toggled(toggled_on: bool) -> void:
 	Global.currentTheme = toggled_on

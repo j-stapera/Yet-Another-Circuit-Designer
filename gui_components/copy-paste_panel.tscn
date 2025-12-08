@@ -136,7 +136,6 @@ layout_mode = 2
 text = "Graphic 
 Designer UI"
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Save Button" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Check Button" to="." method="_on_check_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Simplify Button" to="." method="_on_simplify_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Solve" to="." method="_on_solve_pressed"]
