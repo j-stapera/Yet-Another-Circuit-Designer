@@ -56,6 +56,7 @@ NOTE: Currently there are other three components available: resistors, voltage s
 
 ##### To clear component grid:
 1. Press *CTRL+F*
+
 NOTE: As of v0.7.0 there does not currently exist a way to remove individual components
 
 ## Development Team
