@@ -17,7 +17,9 @@ Future development intends to expand on this feature set.
 This is a very lightweight program so most modern systems should be able to run it. 
 
 CPU: Any 2 core CPU
+
 Storage: ~120MB
+
 RAM: 2GB
 
 If you choose to build the program yourself, refer the the system requirements of [Godot](https://docs.godotengine.org/en/stable/about/system_requirements.html#godot-editor)
