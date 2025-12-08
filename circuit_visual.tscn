@@ -1,13 +1,29 @@
 [gd_scene load_steps=2 format=3 uid="uid://6ngd7a3uneax"]
 
-[ext_resource type="Script" uid="uid://2jvmdxynrixn" path="res://circuit_visualization.gd" id="1_54v4x"]
+[sub_resource type="GDScript" id="GDScript_cr2gq"]
+script/source = "extends Window
+
+@onready var circuit_display = $HSplitContainer/PanelContainer/Circuit
+@onready var solution_text = $HSplitContainer/ScrollContainer/VBoxContainer/RichTextLabel
+
+@onready var Graph = %Graph
+@onready var Solver = %Solver
+@onready var Loop = %\"Mesh Loop\"
+
+
+@export var component_spacing = 100
+
+
+func _on_close_requested() -> void:
+	hide()
+"
 
 [node name="Window" type="Window"]
 oversampling_override = 1.0
 position = Vector2i(0, 36)
 size = Vector2i(1200, 1200)
 popup_window = true
-script = ExtResource("1_54v4x")
+script = SubResource("GDScript_cr2gq")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 anchors_preset = 15

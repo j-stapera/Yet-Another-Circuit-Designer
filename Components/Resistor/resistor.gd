@@ -15,6 +15,24 @@ func _ready():
 	id_label.text = id
 	Global.connect("theme_change", _update_theme)
 	_update_theme(Global.currentTheme)
+func get_save_data():
+	return {
+		"type": component_type,
+		"id": id,
+		"position": {
+			"x": position.x,
+			"y": position.y
+		},
+		"rotation": rotation,
+		"current": current,
+		"value": resistance
+	}
+
+func load_save_data(data: Dictionary):
+	id = data["id"]
+	position = Vector2(data["position"]["x"], data["position"]["y"])
+	rotation = data.get("rotation", 0.0)
+	resistance = data.get("value")
 
 func get_value():
 	return resistance
@@ -32,22 +50,12 @@ func _on_line_edit_text_submitted(new_text):
 	var res = new_text.to_float()
 	set_value(res)
 
+func _input(event):
+	if event.is_action_pressed("Reset"):
+		counter = 0
 func _update_theme(newValue):
 	if(newValue == false):
 		get_node("Sprite2D").get_material().shader = null
 	else:
 		get_node("Sprite2D").get_material().shader = shader
-
-#func on_input(event):
-	#if event is InputEventMouseButton and event.is_pressed():
-		#if event.is_double_click():
-			#display_info()
-
-#func display_info():
-	#var info_instance = info_window.instance()
-	#add_child(info_instance)
-	#
-	#var dialog = info_instance.get_child(0)
-	#
-	#dialog.set_text("Test")
 	

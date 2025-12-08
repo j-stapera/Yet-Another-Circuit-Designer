@@ -51,7 +51,6 @@ func _on_button_current_source_mouse_entered() -> void:
 func _on_button_current_source_mouse_exited() -> void:
 	$"MarginContainer/VBoxContainer/Button Current Source/PanelContainer".visible = false
 
-
 func _on_theme_toggle_toggled(toggled_on: bool) -> void:
 	if(toggled_on == false):
 		get_material().shader = null

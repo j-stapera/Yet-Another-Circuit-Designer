@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfpiupp15il6d"]
+[gd_scene load_steps=11 format=3 uid="uid://bfpiupp15il6d"]
 
 [ext_resource type="Texture2D" uid="uid://dj3f6n68t587x" path="res://Components/Resistor/resistor.png" id="1_anlt7"]
 [ext_resource type="Script" uid="uid://uwjdn8ciimkh" path="res://Components/Resistor/resistor.gd" id="1_j3p18"]
@@ -8,7 +8,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bke0b"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bke0b"]
+
 [sub_resource type="Theme" id="Theme_iwnpr"]
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_bke0b")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mlmyw"]
 

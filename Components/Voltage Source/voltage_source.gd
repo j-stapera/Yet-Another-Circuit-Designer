@@ -16,6 +16,24 @@ func _ready():
 	id_label.text = id
 	Global.connect("theme_change", _update_theme)
 	_update_theme(Global.currentTheme)
+func get_save_data():
+	return {
+		"type": component_type,
+		"id": id,
+		"position": {
+			"x": position.x,
+			"y": position.y
+		},
+		"rotation": rotation,
+		"current": current,
+		"value": voltage
+	}
+
+func load_save_data(data: Dictionary):
+	id = data["id"]
+	position = Vector2(data["position"]["x"], data["position"]["y"])
+	rotation = data.get("rotation", 0.0)
+	voltage = data.get("value")
 
 func get_value():
 	return voltage
@@ -32,7 +50,10 @@ func get_prefix() -> String:
 func _on_line_edit_text_submitted(new_text):
 	var v = new_text.to_float()
 	set_value(v)
-	
+
+func _input(event):
+	if event.is_action_pressed("Reset"):
+		counter = 0
 func _update_theme(newValue):
 	if(newValue == false):
 		get_node("Sprite2D").get_material().shader = null

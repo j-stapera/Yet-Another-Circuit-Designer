@@ -16,7 +16,7 @@ font = ExtResource("4_7nbh6")
 font_size = 550
 
 [node name="CurrentSource" type="Node2D"]
-scale = Vector2(0.06, 0.06)
+scale = Vector2(0.076, 0.076)
 script = ExtResource("1_fgipw")
 
 [node name="CurrentSource" type="Sprite2D" parent="."]
@@ -34,20 +34,23 @@ offset_bottom = -520.0
 scale = Vector2(30.613209, 26.564402)
 
 [node name="Start" type="Area2D" parent="."]
+position = Vector2(0, -26.31579)
 
 [node name="StartPos" type="CollisionShape2D" parent="Start"]
 unique_name_in_owner = true
-position = Vector2(0, 860)
+position = Vector2(0, 855.2631)
 scale = Vector2(31.400043, 31.400043)
 shape = SubResource("CircleShape2D_5ms80")
 
 [node name="Port" type="Sprite2D" parent="Start"]
+visible = false
 self_modulate = Color(1, 1, 1, 0.39215687)
-position = Vector2(-4.640259, -857.6469)
+position = Vector2(-4.7683716e-07, 842.10504)
 scale = Vector2(-1.6967326, -1.6967326)
 texture = ExtResource("2_my1k3")
 
 [node name="End" type="Area2D" parent="."]
+position = Vector2(0, 13.157895)
 
 [node name="EndPos" type="CollisionShape2D" parent="End"]
 unique_name_in_owner = true
@@ -58,7 +61,7 @@ shape = SubResource("CircleShape2D_5ms80")
 [node name="Port2" type="Sprite2D" parent="End"]
 visible = false
 self_modulate = Color(1, 1, 1, 0.39215687)
-position = Vector2(-0.0019165062, 880)
+position = Vector2(0, -828.9474)
 scale = Vector2(1.8000343, 1.8000343)
 texture = ExtResource("2_my1k3")
 
