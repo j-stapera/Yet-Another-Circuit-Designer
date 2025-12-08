@@ -1,17 +1,17 @@
 [gd_scene load_steps=13 format=3 uid="uid://c5guqm1eybxig"]
 
 [ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main/main.gd" id="1_hru16"]
-[ext_resource type="Script" uid="uid://dxo3u8p1m3hpn" path="res://main/saveload.gd" id="2_kb4jg"]
 [ext_resource type="PackedScene" uid="uid://cjto5eyl021c" path="res://gui_components/components_selector.tscn" id="2_txhx8"]
 [ext_resource type="PackedScene" uid="uid://uo4go1gio6sk" path="res://gui_components/copy-paste_panel.tscn" id="3_e8s8u"]
 [ext_resource type="Script" uid="uid://bv58nmu8w88os" path="res://Solving Mechanisms/graph.gd" id="4_e8s8u"]
 [ext_resource type="Script" uid="uid://cr2hvxlsuuapi" path="res://Solving Mechanisms/solver.gd" id="6_34iq7"]
-[ext_resource type="Texture2D" uid="uid://chcjeupf4j33g" path="res://main/defaultbg.jpg" id="7_467os"]
+[ext_resource type="Texture2D" uid="uid://chcjeupf4j33g" path="res://main/defaultbg.jpg" id="6_467os"]
 [ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://Solving Mechanisms/loop_detection.gd" id="7_bcysr"]
+[ext_resource type="Script" uid="uid://cduje5tk8xm8p" path="res://gui_components/background.gd" id="7_j4ngi"]
 [ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://Solving Mechanisms/mesh_loop.gd" id="8_467os"]
-[ext_resource type="Script" uid="uid://cduje5tk8xm8p" path="res://gui_components/background.gd" id="8_j4ngi"]
+[ext_resource type="Script" uid="uid://dxo3u8p1m3hpn" path="res://main/saveload.gd" id="9_bcysr"]
 
-[sub_resource type="GDScript" id="GDScript_kb4jg"]
+[sub_resource type="GDScript" id="GDScript_34iq7"]
 script/source = "#File to store the graph representation of the connections in the graph.
 #Design goals:
 #Each component will be a node in the graph
@@ -43,12 +43,12 @@ script = ExtResource("1_hru16")
 position = Vector2(639, 359)
 
 [node name="SaveLoad" type="Node" parent="."]
-script = ExtResource("2_kb4jg")
+script = ExtResource("9_bcysr")
 
 [node name="WireMode" type="Node2D" parent="."]
 
 [node name="ConnectionGraph" type="Node" parent="."]
-script = SubResource("GDScript_kb4jg")
+script = SubResource("GDScript_34iq7")
 
 [node name="Graph" type="Node" parent="."]
 unique_name_in_owner = true
@@ -67,46 +67,34 @@ unique_name_in_owner = true
 script = ExtResource("8_467os")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
 
 [node name="Background" type="Sprite2D" parent="CanvasLayer"]
 visible = false
 position = Vector2(643.49994, 364.00003)
 scale = Vector2(0.44633332, 0.37700003)
-texture = ExtResource("7_467os")
-script = ExtResource("8_j4ngi")
+texture = ExtResource("6_467os")
+script = ExtResource("7_j4ngi")
 
 [node name="Panel" parent="CanvasLayer" instance=ExtResource("3_e8s8u")]
-z_index = 1
-offset_left = -796.0
+offset_top = 3.0517578e-05
 size_flags_horizontal = 8
 
-[node name="ThemeToggle" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer" index="6"]
-text = "Graphic Designer Mode"
-
 [node name="FoldableContainer" parent="CanvasLayer" instance=ExtResource("2_txhx8")]
-z_index = 1
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 128.0
-offset_bottom = 466.0
+offset_left = 6.1035156e-05
+offset_top = 3.0517578e-05
+offset_right = 128.00006
+offset_bottom = 466.00003
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = SubResource("Theme_34iq7")
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-z_index = 1
-offset_top = 4.0
-offset_right = 127.0
-offset_bottom = 31.0
-text = "  > Tools"
+[node name="VBoxContainer" parent="CanvasLayer/FoldableContainer/MarginContainer" index="0"]
+script = null
 
 [connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
 [connection signal="pressed" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/Save Button" to="SaveLoad" method="_on_save_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/Load Button" to="SaveLoad" method="_on_load_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/Check Button" to="Graph" method="_on_check_button_pressed"]
-[connection signal="toggled" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/ThemeToggle" to="." method="_on_theme_toggle_toggled"]
-[connection signal="toggled" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/ThemeToggle" to="CanvasLayer/FoldableContainer" method="_on_theme_toggle_toggled"]
 [connection signal="gui_input" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_mouse_exited"]
