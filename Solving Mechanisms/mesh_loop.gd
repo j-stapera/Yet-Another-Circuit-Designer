@@ -43,11 +43,8 @@ func solve_mesh_analysis():
 	add_step("Step 3: Write KVL Equations for Each Mesh", "Apply Kirchhoff's Voltage Law around each mesh")
 	kvl_equations()
 	
-	#add_step("Step 4: Form Matrix Equation [R][I] = [V]", "Organize equations into matrix form")
 	var mesh_matrix = build_mesh_matrix()
-	#add_step_result(mesh_matrix["description"])
-	#add_step_result("\nMatrix Form:")
-	#add_step_result(mesh_matrix["matrix_display"])
+
 	
 	add_step("Step 4: Solve for Mesh Currents", "Use linear algebra to find all mesh currents")
 	var solution = solve_mesh_system(mesh_matrix)
@@ -339,7 +336,6 @@ func build_mesh_matrix():
 	for row in R_matrix:
 		print("  ", row)
 	print("V vector: ", V_vector)
-	print()
 	
 	return {
 		"R_matrix": R_matrix,

@@ -75,6 +75,7 @@ func load_circuit(graph_node: Node, filename: String) -> bool:
 		push_error("Failed to open save file for reading")
 		return false
 	
+	
 	var json_string = file.get_as_text()
 	file.close()
 	
@@ -176,8 +177,6 @@ func get_all_saves() -> Array:
 		file_name = dir.get_next()
 	
 	dir.list_dir_end()
-	
-	# Sort by save time (most recent first)
 	saves.sort_custom(func(a, b): return a.save_time > b.save_time)
 	
 	return saves
@@ -226,7 +225,6 @@ func create_wire(wire_data: Dictionary, graph):
 	
 	return wire
 
-# Example button handlers with filename input
 func _on_save_button_pressed():
 	var popup = preload("res://popup_windows/saveload_popup.tscn").instantiate()
 	add_child(popup)
@@ -253,16 +251,3 @@ func finalize_load(text):
 		print("Please enter a filename to load")
 		return
 	load_circuit(%Graph, filename)
-
-# Quick save to last used filename
-func quick_save() -> void:
-	if current_filename.is_empty():
-		current_filename = "quick_save"
-	save_circuit(%Graph, current_filename)
-
-# Quick load from last used filename
-func quick_load() -> void:
-	if current_filename.is_empty():
-		print("No previous save to load")
-		return
-	load_circuit(%Graph, current_filename)

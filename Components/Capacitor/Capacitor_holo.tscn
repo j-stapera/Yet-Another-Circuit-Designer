@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1m12b7iugr5g"]
+
+[ext_resource type="Texture2D" uid="uid://dlp8dpyy38cpp" path="res://Components/Capacitor/capacitor.png" id="1_37g3o"]
+
+[node name="CapacitorHolo" type="Node2D"]
+scale = Vector2(0.066, 0.066)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.5568628)
+texture = ExtResource("1_37g3o")

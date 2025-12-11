@@ -1,12 +1,16 @@
 class_name Component
 extends Node2D
 
+signal something_changed
+
 var id: String
 var component_type: String 
 var hover = false
 var start_connections: Dictionary = {}
 var end_connections: Dictionary = {}
 var current: float
+var states: Array = []
+
 
 signal port_clicked(component_id, port_name, position)
 
@@ -29,12 +33,13 @@ func set_current(new_current: float):
 	#var new_value_string = str(new_value)
 	#current = new_value_string
 	current = new_current
+	something_changed.emit()
 
 func get_value():
 	return 0
 
 func set_value(new_value):
-	pass
+	something_changed.emit()
 
 func get_prefix() -> String:
 	return ""
@@ -52,18 +57,18 @@ func handle_port_visibility():
 		$End/Port2.visible = false
 
 func snap_to_grid(pos):
-	return Vector2(
-		round(pos.x / Global.grid_size) * Global.grid_size,
-		round(pos.y / Global.grid_size) * Global.grid_size
-	)
+	return Vector2(0,0)
 
 func handle_movement():
 	if hover and Input.is_action_pressed("Drag"):
 		position = snap_to_grid(get_global_mouse_position())
 	if hover and Input.is_action_just_pressed("Rotate Left"):
 		rotation_degrees -= 90
+		something_changed.emit()
 	if hover and Input.is_action_just_pressed("Rotate Right"):
 		rotation_degrees += 90
+		something_changed.emit()
+
 
 func _on_container_mouse_entered():
 	hover = true

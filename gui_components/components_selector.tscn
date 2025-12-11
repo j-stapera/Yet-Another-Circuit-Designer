@@ -70,6 +70,8 @@ text = "Resistor"
 [node name="Button Capacitor" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+tooltip_text = "This feature is not fully implemented. AC analysis coming soon!"
+disabled = true
 icon = ExtResource("2_6ojnw")
 icon_alignment = 1
 expand_icon = true
@@ -133,6 +135,8 @@ text = "Wire Tool"
 [node name="Button Inductor" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+tooltip_text = "This feature is not fully implemented. AC analysis coming soon!"
+disabled = true
 icon = ExtResource("4_k48y5")
 icon_alignment = 1
 expand_icon = true

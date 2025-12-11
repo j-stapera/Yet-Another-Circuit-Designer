@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://dm7xtklqdm61m"]
+
+[ext_resource type="Script" uid="uid://cbywafgrs7pjg" path="res://gui_components/error_window.gd" id="1_qqlcc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qqlcc"]
+content_margin_left = 40.0
+content_margin_right = 40.0
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="ErrorWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qqlcc")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qqlcc")
+
+[node name="Label" type="Label" parent="PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 350
+text = "test"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="mouse_entered" from="PanelContainer" to="." method="_on_panel_container_mouse_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

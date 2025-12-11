@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://chxbtjcq4epdw"]
+[gd_scene load_steps=14 format=3 uid="uid://chxbtjcq4epdw"]
 
 [ext_resource type="Script" uid="uid://bib61604nsbtk" path="res://main/main.gd" id="1_hru16"]
 [ext_resource type="Script" uid="uid://dxo3u8p1m3hpn" path="res://main/saveload.gd" id="2_kb4jg"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://x5ukwwpw0ud3" path="res://Solving Mechanisms/loop_detection.gd" id="7_bcysr"]
 [ext_resource type="Script" uid="uid://cpg4lhfq5xwvu" path="res://Solving Mechanisms/mesh_loop.gd" id="8_467os"]
 [ext_resource type="Script" uid="uid://cduje5tk8xm8p" path="res://gui_components/background.gd" id="8_j4ngi"]
+[ext_resource type="PackedScene" uid="uid://db63ky1lnlf21" path="res://misc/question.tscn" id="11_j4ngi"]
 
 [sub_resource type="GDScript" id="GDScript_k64be"]
 script/source = "#File to store the graph representation of the connections in the graph.
@@ -37,6 +38,8 @@ var nodes = {} #dictonary. Put nodes as key:value pairs. Get key from num_nodes 
 [sub_resource type="Theme" id="Theme_34iq7"]
 
 [node name="main" type="Node2D"]
+show_behind_parent = true
+visibility_layer = 2
 script = ExtResource("1_hru16")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -95,6 +98,15 @@ offset_right = 127.0
 offset_bottom = 31.0
 text = "  > Tools"
 
+[node name="Question" parent="CanvasLayer" instance=ExtResource("11_j4ngi")]
+anchors_preset = -1
+anchor_left = 0.965
+anchor_top = 0.935
+anchor_right = 0.965
+anchor_bottom = 0.935
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
 [connection signal="child_entered_tree" from="Graph" to="Graph" method="_on_child_entered_tree"]
 [connection signal="pressed" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/Save Button" to="SaveLoad" method="_on_save_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/MarginContainer/HBoxContainer/Load Button" to="SaveLoad" method="_on_load_button_pressed"]
@@ -103,6 +115,7 @@ text = "  > Tools"
 [connection signal="mouse_entered" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/FoldableContainer" to="." method="_on_foldable_container_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Resistor" to="." method="_on_button_resistor_pressed"]
+[connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Capacitor" to="." method="_on_button_capacitor_pressed"]
 [connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Voltage Source" to="." method="_on_button_voltage_source_pressed"]
 [connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Wire" to="." method="_on_button_wire_pressed"]
 [connection signal="pressed" from="CanvasLayer/FoldableContainer/MarginContainer/VBoxContainer/Button Current Source" to="." method="_on_button_current_source_pressed"]

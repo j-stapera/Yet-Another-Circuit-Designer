@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4djbtxu7nojf"]
+[gd_scene load_steps=5 format=3 uid="uid://d4djbtxu7nojf"]
 
 [ext_resource type="Script" uid="uid://dtm6j0eq3vchc" path="res://popup_windows/solution_window.gd" id="1_p3eht"]
+[ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="2_1sym2"]
+[ext_resource type="FontFile" uid="uid://dsnfvui2jaav3" path="res://misc/verdanab.ttf" id="3_ki10c"]
 
 [sub_resource type="Theme" id="Theme_p3eht"]
 
@@ -28,6 +30,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
 theme = SubResource("Theme_p3eht")
+theme_override_fonts/normal_font = ExtResource("2_1sym2")
+theme_override_fonts/bold_font = ExtResource("3_ki10c")
 bbcode_enabled = true
 fit_content = true
 context_menu_enabled = true

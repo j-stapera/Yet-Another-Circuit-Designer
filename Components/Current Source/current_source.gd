@@ -18,6 +18,26 @@ func _ready():
 	Global.connect("theme_change", _update_theme)
 	_update_theme(Global.currentTheme)
 
+func get_save_data():
+	return {
+		"type": component_type,
+		"id": id,
+		"position": {
+			"x": position.x,
+			"y": position.y
+		},
+		"rotation": rotation,
+		#"current": current,
+		"value": current
+	}
+
+func load_save_data(data: Dictionary):
+	id = data["id"]
+	position = Vector2(data["position"]["x"], data["position"]["y"])
+	rotation = data.get("rotation", 0.0)
+	current = data.get("value")
+
+
 func get_value():
 	return current
 
@@ -39,3 +59,21 @@ func _update_theme(newValue):
 		get_node("CurrentSource").get_material().shader = null
 	else:
 		get_node("CurrentSource").get_material().shader = shader
+
+func snap_to_grid(pos):
+	var half_grid = Global.grid_size / 2.0
+	var rotation_mod = fmod(abs(rotation_degrees), 180)
+	
+	var is_rotated_90 = (rotation_mod > 45 && rotation_mod < 135)
+	var should_be_vertical = false
+	should_be_vertical = !is_rotated_90
+	if should_be_vertical:
+		return Vector2(
+			round(pos.x / Global.grid_size) * Global.grid_size,
+			round(pos.y / Global.grid_size) * Global.grid_size + half_grid
+		)
+	else:
+		return Vector2(
+			round(pos.x / Global.grid_size) * Global.grid_size + half_grid,
+			round(pos.y / Global.grid_size) * Global.grid_size
+		)

@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://bya65j7bsp30b"]
+
+[ext_resource type="Script" uid="uid://chwyw2kq6qb6f" path="res://Components/Capacitor/capacitor.gd" id="1_1dqdb"]
+[ext_resource type="Texture2D" uid="uid://dlp8dpyy38cpp" path="res://Components/Capacitor/capacitor.png" id="1_2xxni"]
+[ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="2_1dqdb"]
+[ext_resource type="Script" uid="uid://cmnnlrc586hgi" path="res://Components/Resistor/text.gd" id="3_u3v5b"]
+[ext_resource type="Texture2D" uid="uid://wd0s0yii56ma" path="res://misc/bubble.png" id="4_utwyy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ws6qf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bke0b"]
+
+[sub_resource type="Theme" id="Theme_547i7"]
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_bke0b")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ycpmb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m4fj8"]
+line_spacing = 8.0
+font = ExtResource("2_1dqdb")
+font_size = 500
+
+[node name="Capacitor" type="Node2D"]
+scale = Vector2(0.066, 0.066)
+script = ExtResource("1_1dqdb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ws6qf")
+position = Vector2(2.8140259, -4.651136)
+texture = ExtResource("1_2xxni")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = -610.0
+offset_top = -843.0
+offset_right = 586.0
+offset_bottom = -470.0
+theme = SubResource("Theme_547i7")
+theme_override_fonts/font = ExtResource("2_1dqdb")
+theme_override_font_sizes/font_size = 300
+placeholder_text = "0"
+alignment = 1
+flat = true
+select_all_on_focus = true
+script = ExtResource("3_u3v5b")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -753.0
+offset_top = -464.00003
+offset_right = -713.0
+offset_bottom = -424.00034
+scale = Vector2(37.838284, 22.99834)
+
+[node name="Start" type="Area2D" parent="."]
+position = Vector2(-221, -2)
+
+[node name="StartPos" type="CollisionShape2D" parent="Start"]
+unique_name_in_owner = true
+position = Vector2(-739.9999, 0)
+scale = Vector2(18.199997, 18.199997)
+shape = SubResource("CircleShape2D_ycpmb")
+
+[node name="Port" type="Sprite2D" parent="Start"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.39215687)
+position = Vector2(-737.5, 12.5)
+texture = ExtResource("4_utwyy")
+
+[node name="End" type="Area2D" parent="."]
+position = Vector2(224, -5)
+
+[node name="EndPos" type="CollisionShape2D" parent="End"]
+unique_name_in_owner = true
+position = Vector2(740.0001, 0)
+scale = Vector2(18.199997, 18.199997)
+shape = SubResource("CircleShape2D_ycpmb")
+
+[node name="Port2" type="Sprite2D" parent="End"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.39215687)
+position = Vector2(737.5, 12.5)
+texture = ExtResource("4_utwyy")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -185.0
+offset_top = 481.0
+offset_right = -184.0
+offset_bottom = 1280.0
+scale = Vector2(1, 0.637)
+label_settings = SubResource("LabelSettings_m4fj8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="editing_toggled" from="LineEdit" to="LineEdit" method="_on_editing_toggled"]
+[connection signal="text_submitted" from="LineEdit" to="LineEdit" method="_on_text_submitted"]
+[connection signal="gui_input" from="Container" to="." method="_on_container_gui_input"]
+[connection signal="input_event" from="Start" to="." method="_on_start_input_event"]
+[connection signal="input_event" from="End" to="." method="_on_end_input_event"]
