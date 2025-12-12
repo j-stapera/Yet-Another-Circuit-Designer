@@ -36,4 +36,18 @@ grow_vertical = 2
 placeholder_text = "Enter Save Name"
 expand_to_text_length = true
 
+[node name="Label" type="Label" parent="Window"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Warning: Saved circuits can not be modified."
+
+[connection signal="close_requested" from="Window" to="." method="_on_window_close_requested"]
 [connection signal="text_submitted" from="Window/LineEdit" to="." method="_on_line_edit_text_submitted"]

@@ -23,6 +23,8 @@ var voltageSource_scn = preload("res://Components/Voltage Source/voltage_source.
 var voltageSource_holoscn = preload("res://Components/Voltage Source/vs_holo.tscn")
 var currentSource_scn = preload("res://Components/Current Source/current_source.tscn")
 var currentSource_holoscn = preload("res://Components/Current Source/current_holo.tscn")
+var capacitor_scn = preload("res://Components/Capacitor/Capacitor.tscn")
+var capacitor_holoscn = preload("res://Components/Capacitor/Capacitor_holo.tscn")
 var wire_scn = preload("res://Components/Wire/wire.tscn")
 var element_rotation
 var current_holo_scene = null
@@ -46,6 +48,9 @@ func _on_button_wire_pressed():
 	
 func _on_button_current_source_pressed():
 	select_element(currentSource_scn, currentSource_holoscn)
+
+func _on_button_capacitor_pressed():
+	select_element(capacitor_scn, capacitor_holoscn)
 
 
 ## Assign the currently selected component based on the button pressed
@@ -218,7 +223,7 @@ func _on_port_clicked(component_id, port_name, port_position):
 		$Graph.add_connection(start, end)
 		print("Wire completed")
 
-
+#
 func _draw():
 	var camera = get_viewport().get_camera_2d()
 	if camera == null:
@@ -303,12 +308,21 @@ func _input(event: InputEvent) -> void:
 			var snapped_pos = snap_to_grid(get_global_mouse_position())
 			wire_points.append(snapped_pos)
 			print("Point added at: ", snapped_pos)
+	
+	if event.is_action_pressed("Resistor"):
+		select_element(resistor_scn, resistor_holoscn)
+	if event.is_action_pressed("Voltage"):
+		select_element(voltageSource_scn, voltageSource_holoscn)
+	if event.is_action_pressed("Current"):
+		select_element(currentSource_scn, currentSource_holoscn)
+	if event.is_action_pressed("Wire"):
+		cancel_selection()
+		Global.wire_mode = true
 
 func _update_ui_scale():
 	pass
 
 func cancel_wire_placement():
-	# Call this if user presses Escape or right-clicks
 	if Global.placing_wire and wire_instance:
 		wire_instance.queue_free()
 		wire_instance = null
@@ -318,7 +332,6 @@ func cancel_wire_placement():
 		print("Wire placement cancelled")
 
 func _unhandled_input(event):
-	# Cancel wire placement on right click or Escape
 	if Global.placing_wire:
 		if (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT) or \
 		   (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE):

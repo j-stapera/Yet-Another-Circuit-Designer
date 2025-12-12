@@ -1,17 +1,65 @@
-[gd_scene load_steps=2 format=3 uid="uid://db63ky1lnlf21"]
+[gd_scene load_steps=6 format=3 uid="uid://db63ky1lnlf21"]
 
+[ext_resource type="Script" uid="uid://c2kjv7u5r03cg" path="res://misc/question.gd" id="1_dmsry"]
 [ext_resource type="Texture2D" uid="uid://crq3j8o1edj4h" path="res://misc/question_mark.png" id="1_lkq7x"]
+[ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="2_s2cqb"]
+[ext_resource type="FontFile" uid="uid://dsnfvui2jaav3" path="res://misc/verdanab.ttf" id="3_dmsry"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qbvpp"]
 
 [node name="Question" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_dmsry")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(0.4249623, 0.4249623, 0.4249623, 1)
-scale = Vector2(0.005, 0.005)
+self_modulate = Color(0.22352941, 0.22352941, 0.22352941, 1)
+scale = Vector2(0.03, 0.03)
 texture = ExtResource("1_lkq7x")
 
-[node name="Container" type="Container" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, 1.9999994)
+scale = Vector2(2.71, 2.71)
+shape = SubResource("CircleShape2D_qbvpp")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -338.0
+offset_top = -357.0
+offset_right = 58.0
+offset_bottom = 63.0
+scale = Vector2(0.8, 0.8)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_s2cqb")
+theme_override_fonts/bold_font = ExtResource("3_dmsry")
+bbcode_enabled = true
+text = "[b]No Component Selected[/b]
+[u]Left-click[/u]: Select components & edit value
+[u]Double-click[/u]: Display component information
+[u]Shift+Left-click[/u]: Drags hovered component
+[u]Mouse-Wheel Up/Down[/u]: Camera zoom
+[u]Middle Mouse Button[/u]: Camera pan
+[u]Q/E[/u]: Rotate component
+[u]R[/u]: Selects resistor
+[u]V[/u]: Selects voltage source
+[u]C[/u]: Selects current source
+[u]W[/u]: Selects wire tool
+
+[b]Component Selected[/b]
+[u]Left-click[/u]: Place component
+[u]Right-click[/u]: Deselect component
+[u]Q/E[/u]: Rotate component
+
+[b]Ctrl+F will reset the program[/b]
+[b]\"H\" to hide this button[/b]
+[b]Click ? to pin/unpin[/b]"
+fit_content = true
+autowrap_mode = 0
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

@@ -107,11 +107,15 @@ text = "Load"
 
 [node name="Check Button" type="Button" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "This feature is not currently implemented."
+disabled = true
 text = "Check 
 Circuit"
 
 [node name="Simplify Button" type="Button" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "This feature is not currently implemented."
+disabled = true
 text = "Simplify 
 Circuit"
 
