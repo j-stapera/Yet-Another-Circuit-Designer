@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ceclpv60gktqs"]
+[gd_scene load_steps=10 format=3 uid="uid://ceclpv60gktqs"]
 
 [ext_resource type="Texture2D" uid="uid://dw2mrqwu8jjfb" path="res://Components/Current Source/current_source.png" id="1_7pd0a"]
 [ext_resource type="Script" uid="uid://d0tslhf5jv2sh" path="res://Components/Current Source/current_source.gd" id="1_fgipw"]
 [ext_resource type="Texture2D" uid="uid://wd0s0yii56ma" path="res://misc/bubble.png" id="2_my1k3"]
 [ext_resource type="PackedScene" uid="uid://bgcqca7xv4cid" path="res://Components/Voltage Source/value_visual.tscn" id="3_fgipw"]
 [ext_resource type="FontFile" uid="uid://c21od1lsghobe" path="res://misc/Verdana.ttf" id="4_7nbh6"]
+[ext_resource type="Script" uid="uid://cmnnlrc586hgi" path="res://Components/Resistor/text.gd" id="5_7nbh6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fgipw"]
 
@@ -66,6 +67,7 @@ scale = Vector2(1.8000343, 1.8000343)
 texture = ExtResource("2_my1k3")
 
 [node name="LineEdit" parent="." instance=ExtResource("3_fgipw")]
+script = ExtResource("5_7nbh6")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -1300.0
